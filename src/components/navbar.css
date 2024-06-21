@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100&display=swap");
+
+
+
+.navbar {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  background: -webkit-linear-gradient(#eee, rgb(69, 57, 248));
+  -webkit-background-clip:  text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo span {
+  font-size: 2.2rem;
+}
+
+.nav-link {
+  font-size: 1.3rem;
+  text-transform: capitalize;
+  color: rgba(0, 0, 3, 0.8);
+  transition: 0.5s;
+}
+
+.nav-link:hover {
+  color: rgba(0, 0, 3, 1);
+  text-decoration: underline;
+}
+
+.social-media .nav-link {
+  display: flex;
+  align-items: center;
+  font-size: 2.5rem;
+}
+
+.facebook {
+  color: #3b5998;
+}
+
+.instagram {
+  color: #c32aa3;
+}
+
+.youtube {
+  color: #ff0000;
+}
+
+@media (max-width: 992px) {
+  .social-media .nav-link {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .social-media .nav-link {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .social-media .nav-link {
+    font-size: 2rem;
+  }
+}

@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Form, Row, Col } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
 
 const Menus = () => {
   const [menus, setMenus] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [filterBy, setFilterBy] = useState('');
 
   useEffect(() => {
     fetchMenus();
+    fetchCategories();
   }, []);
 
   const fetchMenus = async () => {
@@ -19,6 +23,19 @@ const Menus = () => {
       setMenus(result);
     } catch (error) {
       console.error("Error fetching menus:", error);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/menu/category");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const result = await response.json();
+      setCategories(result);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
     }
   };
 
@@ -42,33 +59,30 @@ const Menus = () => {
     }
   };
 
-  // Dummy data to display when actual data is being fetched
-  const dummyData = [
-    { id: 1, name: 'Cheeseburger', description: 'Juicy beef patty with cheese', price: 9.99, category: 'Main Course' },
-    { id: 2, name: 'Vegan Salad', description: 'Fresh mixed greens with vinaigrette', price: 7.99, category: 'Salads' },
-    { id: 3, name: 'Spaghetti Bolognese', description: 'Pasta with a rich meat sauce', price: 12.99, category: 'Main Course' },
-    { id: 4, name: 'Chocolate Cake', description: 'Rich and moist chocolate cake', price: 5.99, category: 'Desserts' },
-    { id: 5, name: 'Caesar Salad', description: 'Romaine lettuce with Caesar dressing', price: 8.99, category: 'Salads' }
-  ];
+  const handleFilterChange = (e) => {
+    setFilterBy(e.target.value);
+  };
 
-  // Use dummy data if menus array is empty (initial state or while fetching)
-  const displayMenus = menus.length > 0 ? menus : dummyData;
-
-  const filteredMenus = displayMenus.filter(menu =>
+  const filteredMenus = menus.filter(menu =>
     menu.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     menu.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    menu.category.toLowerCase().includes(searchTerm.toLowerCase())
+    menu.category?.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const displayMenus = filteredMenus.map(menu => ({
+    ...menu,
+    categoryName: menu.category ? menu.category.name : 'Uncategorized'
+  }));
 
   return (
     <>
       <h1>Menu Management</h1>
       <Row className="mb-4">
         <Col>
-          <Button variant="primary" onClick={() => alert('Add Item')}>Add Item</Button>
+          <Button as={NavLink} to="/addMenuItem" variant="primary">Add Item</Button>
         </Col>
         <Col>
-          <Form.Select aria-label="Filter Item">
+          <Form.Select aria-label="Filter Item" onChange={handleFilterChange}>
             <option value="">Filter by...</option>
             <option value="name">Name</option>
             <option value="description">Description</option>
@@ -97,13 +111,13 @@ const Menus = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredMenus.map((menu) => (
+            {displayMenus.map((menu) => (
               <tr key={menu.id}>
                 <td>{menu.id}</td>
                 <td>{menu.name}</td>
                 <td>{menu.description}</td>
                 <td>{menu.price}</td>
-                <td>{menu.category}</td>
+                <td>{menu.category ? menu.category.name : 'Uncategorized'}</td>
                 <td>
                   <Button
                     style={{ marginRight: "10px" }}

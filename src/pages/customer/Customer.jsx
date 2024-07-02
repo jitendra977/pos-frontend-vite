@@ -12,7 +12,7 @@ const Customers = () => {
 
   const fetchCustomers = async () => {
     try {
-      const response = await fetch("http://localhost:8080/customer/");
+      const response = await fetch("http://82.180.161.107:8080/customer/");
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -26,7 +26,7 @@ const Customers = () => {
   const confirmDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this customer?")) {
       try {
-        const response = await fetch(`http://localhost:8080/customer/${id}`, {
+        const response = await fetch(`http://82.180.161.107:8080/customer/${id}`, {
           method: 'DELETE',
         });
         if (!response.ok) {

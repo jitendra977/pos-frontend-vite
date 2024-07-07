@@ -84,15 +84,6 @@ const Header = () => {
                 Contact
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink
-                className="nav-link"
-                to="/mobile-home"
-                onClick={handleLinkClick}
-              >
-                Mobile
-              </NavLink>
-            </li>
           </ul>
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <li className="nav-item">

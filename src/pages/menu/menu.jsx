@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Form, Row, Col } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-
+import { BASE_URL } from '../../constant/constant';
 const Menus = () => {
   const [menus, setMenus] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterBy, setFilterBy] = useState('');
+  const [, setFilterBy] = useState('');
 
   useEffect(() => {
     fetchMenus();
@@ -15,7 +15,7 @@ const Menus = () => {
 
   const fetchMenus = async () => {
     try {
-      const response = await fetch("http://localhost:8080/menu/");
+      const response = await fetch(`${BASE_URL}/menu`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -28,7 +28,7 @@ const Menus = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch("http://localhost:8080/menu/category");
+      const response = await fetch(`${BASE_URL}/menu/category`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -47,7 +47,7 @@ const Menus = () => {
 
   const deleteMenu = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/menu/${id}`, {
+      const response = await fetch(`${BASE_URL}/menu/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) {

@@ -21,7 +21,7 @@ const AddCustomer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${BASE_URL}/customer`, {
+      const response = await fetch(`${BASE_URL}/customer/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

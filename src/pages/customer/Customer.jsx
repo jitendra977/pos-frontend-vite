@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Form, Row, Col } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
+import { BASE_URL } from '../../constant/constant';
 
 const Customers = () => {
   const [customers, setCustomers] = useState([]);
@@ -12,7 +13,7 @@ const Customers = () => {
 
   const fetchCustomers = async () => {
     try {
-      const response = await fetch("http://82.180.161.107:8080/customer/");
+      const response = await fetch(`${BASE_URL}/customer`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -26,7 +27,7 @@ const Customers = () => {
   const confirmDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this customer?")) {
       try {
-        const response = await fetch(`http://82.180.161.107:8080/customer/${id}`, {
+        const response = await fetch(`${BASE_URL}/${id}`, {
           method: 'DELETE',
         });
         if (!response.ok) {

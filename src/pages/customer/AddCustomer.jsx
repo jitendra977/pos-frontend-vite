@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
+import { BASE_URL } from '../../constant/constant';
 
 const AddCustomer = () => {
   const initialCustomerState = {
@@ -20,7 +21,7 @@ const AddCustomer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/customer/", {
+      const response = await fetch(`${BASE_URL}/customer`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

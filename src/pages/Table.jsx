@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Card, Badge, Alert } from 'react-bootstrap';
 import { FaChair } from 'react-icons/fa';
 import './dashboard.css'; // Import custom CSS file for Table
 
@@ -8,49 +8,55 @@ const Table = () => {
     const [tables, setTables] = useState([
         {
             id: 1,
-            tableNumber: 1,
-            capacity: 2,
+            name: "Table 1",
             status: "AVAILABLE",
+            totalAmount: 120,
+            capacity: 2,
             location: "Corner",
             smokingAllowed: false
         },
         {
             id: 2,
-            tableNumber: 2,
-            capacity: 4,
+            name: "Table 2",
             status: "AVAILABLE",
+            totalAmount: 180,
+            capacity: 4,
             location: "Near the window",
             smokingAllowed: true
         },
         {
             id: 3,
-            tableNumber: 3,
-            capacity: 6,
+            name: "Table 3",
             status: "BOOKED",
+            totalAmount: 0,
+            capacity: 6,
             location: "Central area",
             smokingAllowed: false
         },
         {
             id: 4,
-            tableNumber: 4,
-            capacity: 3,
+            name: "Table 4",
             status: "AVAILABLE",
+            totalAmount: 90,
+            capacity: 3,
             location: "By the bar",
             smokingAllowed: false
         },
         {
             id: 5,
-            tableNumber: 5,
-            capacity: 2,
+            name: "Table 5",
             status: "AVAILABLE",
+            totalAmount: 150,
+            capacity: 2,
             location: "Outdoor patio",
             smokingAllowed: true
         },
         {
             id: 6,
-            tableNumber: 6,
-            capacity: 8,
+            name: "Table 6",
             status: "AVAILABLE",
+            totalAmount: 200,
+            capacity: 8,
             location: "Private room",
             smokingAllowed: false
         }
@@ -90,8 +96,8 @@ const Table = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // Function to render table cards for mobile view
-    const renderMobileTables = () => {
+    // Function to render table cards
+    const renderTables = () => {
         if (loading) {
             return <Alert variant="info">Loading tables...</Alert>;
         }
@@ -106,16 +112,30 @@ const Table = () => {
 
         return (
             <Container fluid>
-                <Row>
-                    {tables.map((table, index) => (
-                        <Col key={index} xs={12} className="mb-4">
-                            <Card className={`mobile-card ${getStatusColor(table.status)}`}>
+                <Row xs={1} md={2} lg={3} className="g-4">
+                    {tables.map((table) => (
+                        <Col key={table.id}>
+                            <Card className={`table-card ${getStatusColorClass(table.status)}`}>
                                 <Card.Body>
-                                    <Card.Title><FaChair className="me-2 icon" /> Table {table.tableNumber}</Card.Title>
-                                    <Card.Text><strong>Capacity:</strong> {table.capacity}</Card.Text>
-                                    <Card.Text><strong>Status:</strong> {table.status}</Card.Text>
-                                    <Card.Text><strong>Location:</strong> {table.location}</Card.Text>
-                                    <Card.Text><strong>Smoking Allowed:</strong> {table.smokingAllowed ? 'Yes' : 'No'}</Card.Text>
+                                    <Card.Title className="text-center"><FaChair className="me-2 icon" /> {table.name}</Card.Title>
+                                    <hr />
+                                    <div className="d-flex justify-content-between mb-3">
+                                        <div>
+                                            <strong>Status:</strong> <Badge bg={getStatusBadgeVariant(table.status)}>{table.status}</Badge>
+                                        </div>
+                                        <div>
+                                            <strong>Total Amount:</strong> ${table.totalAmount}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <strong>Capacity:</strong> {table.capacity}
+                                    </div>
+                                    <div>
+                                        <strong>Location:</strong> {table.location}
+                                    </div>
+                                    <div>
+                                        <strong>Smoking Allowed:</strong> {table.smokingAllowed ? 'Yes' : 'No'}
+                                    </div>
                                 </Card.Body>
                             </Card>
                         </Col>
@@ -125,43 +145,20 @@ const Table = () => {
         );
     };
 
-    // Function to render table cards for desktop view
-    const renderDesktopTables = () => {
-        if (loading) {
-            return <Alert variant="info">Loading tables...</Alert>;
+    // Function to determine badge variant based on table status
+    const getStatusBadgeVariant = (status) => {
+        switch (status) {
+            case 'AVAILABLE':
+                return 'success';
+            case 'BOOKED':
+                return 'warning';
+            default:
+                return 'primary';
         }
-
-        if (error) {
-            return <Alert variant="danger">Error fetching tables: {error.message}</Alert>;
-        }
-
-        if (tables.length === 0) {
-            return <Alert variant="warning">No tables available.</Alert>;
-        }
-
-        return (
-            <Container fluid>
-                <Row>
-                    {tables.map((table, index) => (
-                        <Col key={index} md={4} lg={3} className="mb-4">
-                            <Card className={`desktop-card ${getStatusColor(table.status)}`}>
-                                <Card.Body>
-                                    <Card.Title><FaChair className="me-2 icon" /> Table {table.tableNumber}</Card.Title>
-                                    <Card.Text><strong>Capacity:</strong> {table.capacity}</Card.Text>
-                                    <Card.Text><strong>Status:</strong> {table.status}</Card.Text>
-                                    <Card.Text><strong>Location:</strong> {table.location}</Card.Text>
-                                    <Card.Text><strong>Smoking Allowed:</strong> {table.smokingAllowed ? 'Yes' : 'No'}</Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))}
-                </Row>
-            </Container>
-        );
     };
 
-    // Function to determine card color based on table status
-    const getStatusColor = (status) => {
+    // Function to determine card color class based on table status
+    const getStatusColorClass = (status) => {
         switch (status) {
             case 'AVAILABLE':
                 return 'available'; // CSS class for available tables
@@ -175,9 +172,9 @@ const Table = () => {
     // Function to determine which view to render based on screen size
     const getMenuItems = () => {
         if (isMobileView) {
-            return renderMobileTables();
+            return renderTables(); // Render tables in a single column for mobile view
         } else {
-            return renderDesktopTables();
+            return renderTables(); // Render tables in a grid layout for desktop view
         }
     };
 

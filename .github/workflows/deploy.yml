@@ -1,32 +1,26 @@
 name: Deploy
 
+# Trigger the workflow on push and
+# pull request events on the master branch
 on:
   push:
-    branches:
-      - main
+    branches: ["master"]
   pull_request:
-    branches:
-      - main
+    branches: ["master"]
 
+# Authenticate to the the server via ssh
+# and run our deployment script
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Install SSH Client
-        run: sudo apt-get install openssh-client -y
-
+      - uses: actions/checkout@v3
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
-          key: ${{ secrets.SSH_KEY }}  # Replace with the secret name for your SSH private key
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}  # Add this line if your key is passphrase protected
-          script: |
-            cd /var/www/pos-frontend-vite
+          key: ${{ secrets.SSHKEY }}
+          script: cd /var/www/pos-frontend-vite
             ./.scripts/deploy.sh

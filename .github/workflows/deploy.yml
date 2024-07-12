@@ -11,10 +11,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        path: /usr/local/bin/node
 
     steps:
       - name: Checkout repository

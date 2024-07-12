@@ -10,12 +10,24 @@ on:
     branches:
       - main
 
+# Specify the Node.js version explicitly
+defaults:
+  run:
+    shell: bash
+    working-directory: /var/www/pos-frontend-vite
+    path: /usr/local/bin/node
+
 # Authenticate to the server via SSH
 # and run our deployment script
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
       - name: Checkout repository
         uses: actions/checkout@v3
 

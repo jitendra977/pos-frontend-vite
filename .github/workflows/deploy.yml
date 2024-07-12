@@ -1,7 +1,5 @@
 name: Deploy
 
-# Trigger the workflow on push and
-# pull request events on the main branch
 on:
   push:
     branches:
@@ -10,24 +8,15 @@ on:
     branches:
       - main
 
-# Specify the Node.js version explicitly
-defaults:
-  run:
-    shell: bash
-    working-directory: /var/www/pos-frontend-vite
-    path: /usr/local/bin/node
-
-# Authenticate to the server via SSH
-# and run our deployment script
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    steps:
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
+    defaults:
+      run:
+        shell: bash
+        path: /usr/local/bin/node
 
+    steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -40,8 +29,8 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
-          key: ${{ secrets.SSH_KEY }}  # Replace with the actual secret name for your SSH private key
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}  # Add this line if your key is passphrase protected
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd /var/www/pos-frontend-vite
             ./.scripts/deploy.sh

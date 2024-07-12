@@ -1,17 +1,32 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-        with:
-          node-version: '20'
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install SSH Client
+        run: sudo apt-get install openssh-client -y
+
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
-          key: ${{ secrets.SSHKEY }}
+          key: ${{ secrets.SSH_KEY }}  # Replace with the secret name for your SSH private key
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}  # Add this line if your key is passphrase protected
           script: |
             cd /var/www/pos-frontend-vite
             ./.scripts/deploy.sh

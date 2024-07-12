@@ -1,39 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Form, Row, Col } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { BASE_URL } from '../../constant/constant';
-const Menus = () => {
-  const [menus, setMenus] = useState([]);
-  const [, setCategories] = useState([]);
+import axios from '../../constant/axios';
+
+const Categories = () => {
+  const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [, setFilterBy] = useState('');
 
   useEffect(() => {
-    fetchMenus();
     fetchCategories();
   }, []);
 
-  const fetchMenus = async () => {
-    try {
-      const response = await fetch(`${BASE_URL}/menu`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const result = await response.json();
-      setMenus(result);
-    } catch (error) {
-      console.error("Error fetching menus:", error);
-    }
-  };
-
   const fetchCategories = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/menu/category`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const result = await response.json();
-      setCategories(result);
+      const response = await axios.get(`/menu/category`);
+      setCategories(response.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
@@ -41,58 +22,34 @@ const Menus = () => {
 
   const confirmDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
-      deleteMenu(id);
+      deleteCategory(id);
     }
   };
 
-  const deleteMenu = async (id) => {
+  const deleteCategory = async (id) => {
     try {
-      const response = await fetch(`${BASE_URL}/menu/${id}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      fetchMenus(); // Refresh the list after deletion
+      await axios.delete(`/menu/${id}`);
+      fetchCategories(); // Refresh the list after deletion
     } catch (error) {
-      console.error("Error deleting menu:", error);
+      console.error("Error deleting category:", error);
     }
   };
 
-  const handleFilterChange = (e) => {
-    setFilterBy(e.target.value);
-  };
-
-  const filteredMenus = menus.filter(menu =>
-    menu.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    menu.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    menu.category?.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredCategories = categories.filter(category =>
+    category.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  const displayMenus = filteredMenus.map(menu => ({
-    ...menu,
-    categoryName: menu.category ? menu.category.name : 'Uncategorized'
-  }));
 
   return (
     <>
-      <h1>Menu Management</h1>
+      <h1>Categories Management</h1>
       <Row className="mb-4">
         <Col>
-          <Button as={NavLink} to="/addMenuItem" variant="primary">Add Item</Button>
-        </Col>
-        <Col>
-          <Form.Select aria-label="Filter Item" onChange={handleFilterChange}>
-            <option value="">Filter by...</option>
-            <option value="name">Name</option>
-            <option value="description">Description</option>
-            <option value="category">Category</option>
-          </Form.Select>
+          <Button as={NavLink} to="/addCategory" variant="primary">Add Category</Button>
         </Col>
         <Col>
           <Form.Control
             type="text"
-            placeholder="Search Item"
+            placeholder="Search Category"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -104,24 +61,18 @@ const Menus = () => {
             <tr>
               <th>ID</th>
               <th>Name</th>
-              <th>Description</th>
-              <th>Price</th>
-              <th>Category</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {displayMenus.map((menu) => (
-              <tr key={menu.id}>
-                <td>{menu.id}</td>
-                <td>{menu.name}</td>
-                <td>{menu.description}</td>
-                <td>{menu.price}</td>
-                <td>{menu.category ? menu.category.name : 'Uncategorized'}</td>
+            {filteredCategories.map((category) => (
+              <tr key={category.id}>
+                <td>{category.id}</td>
+                <td>{category.name}</td>
                 <td>
                   <Button
                     style={{ marginRight: "10px" }}
-                    onClick={() => confirmDelete(menu.id)}
+                    onClick={() => confirmDelete(category.id)}
                     variant="danger"
                   >
                     Delete
@@ -137,4 +88,4 @@ const Menus = () => {
   );
 };
 
-export default Menus;
+export default Categories;

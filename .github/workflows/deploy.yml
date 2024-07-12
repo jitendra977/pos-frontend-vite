@@ -28,4 +28,5 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}  # If your key is passphrase protected
           script: |
             cd /var/www/pos-frontend-vite
+            git pull origin main
             ./.scripts/deploy.sh

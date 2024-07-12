@@ -1,7 +1,5 @@
 name: Deploy
 
-# Trigger the workflow on pushed and
-# pull request events on the main branch
 on:
   push:
     branches:
@@ -10,17 +8,10 @@ on:
     branches:
       - main
 
-# Authenticate to the server via SSH
-# and run our deployment script
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '22'
-
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -34,7 +25,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}  # Add this line if your key is passphrase protected
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}  # If your key is passphrase protected
           script: |
             cd /var/www/pos-frontend-vite
             ./.scripts/deploy.sh

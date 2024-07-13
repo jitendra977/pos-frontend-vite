@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Badge, Alert } from 'react-bootstrap';
 import { FaChair } from 'react-icons/fa';
-import './dashboard.css'; // Import custom CSS file for Table
+import '../assets/css/ordertable.css';
 
 const Table = () => {
     const [tables, setTables] = useState([]);
@@ -11,7 +11,7 @@ const Table = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate fetching data
+                // Remove the setTimeout to fetch data instantly
                 const sampleTables = [
                     { id: 1, name: "Table 1", status: "AVAILABLE", totalAmount: 120, capacity: 2, location: "Corner", smokingAllowed: false },
                     { id: 2, name: "Table 2", status: "AVAILABLE", totalAmount: 180, capacity: 4, location: "Near the window", smokingAllowed: true },
@@ -27,6 +27,7 @@ const Table = () => {
                 setLoading(false);
             }
         };
+        
 
         fetchData();
     }, []);

@@ -48,21 +48,31 @@
 .youtube {
   color: #ff0000;
 }
-
-@media (max-width: 992px) {
-  .social-media .nav-link {
-    font-size: 2rem;
+@media (max-width: 991px) {
+  .navbar-collapse {
+    background-color: #ffffff; /* Background color of the collapsed menu */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
   }
-}
 
-@media (max-width: 768px) {
-  .social-media .nav-link {
-    font-size: 2rem;
+  .navbar-nav {
+    width: 100%; /* Full width of collapsed menu */
+    text-align: center; /* Center align links */
   }
-}
 
-@media (max-width: 576px) {
-  .social-media .nav-link {
-    font-size: 2rem;
+  .navbar-nav .nav-item {
+    margin: 10px 0; /* Adjust vertical spacing */
+  }
+
+  .nav-link {
+    color: #333; /* Menu item text color */
+    font-size: 1.2rem; /* Adjust font size */
+  }
+
+  .nav-link:hover {
+    color: #ff6347; /* Color on hover */
+  }
+
+  .navbar-toggler {
+    color: #333; /* Toggler icon color */
   }
 }

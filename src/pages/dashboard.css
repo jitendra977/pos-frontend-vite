@@ -111,14 +111,6 @@
 }
 
 /* Styles for desktop cards */
-.desktop-card {
-    background-color: #fff;
-    margin-bottom: 1rem;
-}
-
-.desktop-card .card-body {
-    padding: 1.5rem;
-}
 
 .desktop-card .card-title {
     font-size: 1.5rem;
@@ -126,10 +118,24 @@
     color: #333;
 }
 
-.desktop-card .card-text {
-    font-size: 1rem;
-    color: #666;
+.desktop-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
 }
+
+.desktop-card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.desktop-card .card-body {
+    flex: 1;
+}
+
 
 /* Color variations based on table status */
 .available {

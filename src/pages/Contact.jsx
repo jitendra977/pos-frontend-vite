@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './contact.css';
+import './contact.css'; // Assuming you have custom styles
 
 const Contact = () => {
   return (
@@ -24,7 +24,7 @@ const Contact = () => {
           </div>
         </div>
         <div className="col-md-6">
-          <form className="card shadow p-4 h-100">
+          <form className="card shadow p-4">
             <div className="form-group mb-3">
               <label htmlFor="name">Name</label>
               <input type="text" className="form-control" id="name" placeholder="Enter your name" />

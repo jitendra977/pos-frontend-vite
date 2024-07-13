@@ -29,7 +29,7 @@ const Customers = () => {
   const confirmDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this customer?")) {
       try {
-        const response = await fetch(`${BASE_URL}/${id}`, {
+        const response = await fetch(`${BASE_URL}/customer/${id}`, {
           method: 'DELETE',
         });
         if (!response.ok) {
@@ -42,6 +42,41 @@ const Customers = () => {
     }
   };
 
+  const handleSwipeStart = (event) => {
+    event.currentTarget.setAttribute('data-startX', event.touches[0].clientX);
+  };
+
+  const handleSwipeMove = (event, id) => {
+    const startX = parseFloat(event.currentTarget.getAttribute('data-startX'));
+    const currentX = event.touches[0].clientX;
+    const diffX = currentX - startX;
+
+    // Swipe left for delete
+    if (diffX < -50) {
+      event.currentTarget.classList.add('swipe-left');
+    } else if (diffX > 50) {
+      // Swipe right for edit
+      event.currentTarget.classList.add('swipe-right');
+    }
+  };
+
+  const handleSwipeEnd = (event, id) => {
+    const startX = parseFloat(event.currentTarget.getAttribute('data-startX'));
+    const currentX = event.changedTouches[0].clientX;
+    const diffX = currentX - startX;
+
+    // Handle delete or edit based on swipe direction
+    if (diffX < -50) {
+      confirmDelete(id);
+    } else if (diffX > 50) {
+      // Implement edit action here
+      console.log("Edit action for customer with ID:", id);
+    }
+
+    // Reset card position
+    event.currentTarget.classList.remove('swipe-left', 'swipe-right');
+  };
+
   const filteredCustomers = customers.filter(customer =>
     customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     customer.phone_number.includes(searchTerm) ||
@@ -52,7 +87,13 @@ const Customers = () => {
   const renderMobileListView = () => (
     <div className="mobile-list-view">
       {filteredCustomers.map((customer) => (
-        <Card key={customer.id} className="mb-3">
+        <Card
+          key={customer.id}
+          className="mb-3"
+          onTouchStart={handleSwipeStart}
+          onTouchMove={(e) => handleSwipeMove(e, customer.id)}
+          onTouchEnd={(e) => handleSwipeEnd(e, customer.id)}
+        >
           <Card.Body className="d-flex align-items-center">
             <div className="flex-grow-1">
               <Card.Title>{customer.name}</Card.Title>
@@ -67,10 +108,9 @@ const Customers = () => {
               alt="Customer"
               className="customer-photo"
             />
-            <div className="ml-auto">
+            <div className="actions">
               <Button
                 style={{ marginRight: "10px" }}
-                onClick={() => confirmDelete(customer.id)}
                 variant="danger"
               >
                 Delete

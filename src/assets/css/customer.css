@@ -1,32 +1,53 @@
-/* Customer List View for Mobile */
-.mobile-list-view .card-body {
+/* customer.css */
+
+.card-body {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    padding: 0.5rem;
+    background-color: #fff;
+    transition: transform 0.3s ease;
   }
   
-  .mobile-list-view .customer-photo {
+  .card-body.swipe-left {
+    transform: translateX(-100%); /* Moves the card completely out */
+  }
+  
+  .card-body.swipe-right {
+    transform: translateX(100%); /* Moves the card completely out */
+  }
+  
+  .card-body .customer-photo {
     width: 50px;
     height: 50px;
-    object-fit: cover;
     border-radius: 50%;
-    margin-left: 10px;
+    margin-right: 1rem;
   }
   
-  /* Responsive design to hide desktop view on mobile */
-  @media (max-width: 768px) {
-    .desktop-table-view {
-      display: none;
-    }
-    .mobile-list-view {
-      display: block;
-    }
+  .card-body .actions {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    padding: 0.5rem;
   }
   
-  /* Hide mobile view on desktop */
-  @media (min-width: 769px) {
-    .mobile-list-view {
-      display: none;
-    }
+/* Responsive design to hide desktop view on mobile */
+@media (max-width: 768px) {
+  .desktop-table-view {
+    display: none;
   }
-  
+  .mobile-list-view {
+    display: block;
+  }
+}
+
+/* Hide mobile view on desktop */
+@media (min-width: 769px) {
+  .mobile-list-view {
+    display: none;
+  }
+}

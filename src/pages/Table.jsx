@@ -5,7 +5,6 @@ import './dashboard.css'; // Import custom CSS file for Table
 
 const Table = () => {
     const [tables, setTables] = useState([]);
-    const [isMobileView, setIsMobileView] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -30,16 +29,6 @@ const Table = () => {
         };
 
         fetchData();
-
-        const handleResize = () => {
-            const isMobile = window.innerWidth <= 768; // Adjust breakpoint as needed
-            setIsMobileView(isMobile);
-        };
-
-        handleResize();
-        window.addEventListener('resize', handleResize);
-
-        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     const renderTables = () => {
@@ -63,22 +52,22 @@ const Table = () => {
                             <Card.Body>
                                 <Card.Title className="text-center"><FaChair className="me-2 icon" /> {table.name}</Card.Title>
                                 <hr />
-                                <div className="d-flex justify-content-between mb-3">
-                                    <div>
+                                <div className="table-details">
+                                    <div className="table-info">
                                         <strong>Status:</strong> <Badge bg={getStatusBadgeVariant(table.status)}>{table.status}</Badge>
                                     </div>
-                                    <div>
+                                    <div className="table-info">
                                         <strong>Total Amount:</strong> ${table.totalAmount}
                                     </div>
-                                </div>
-                                <div>
-                                    <strong>Capacity:</strong> {table.capacity}
-                                </div>
-                                <div>
-                                    <strong>Location:</strong> {table.location}
-                                </div>
-                                <div>
-                                    <strong>Smoking Allowed:</strong> {table.smokingAllowed ? 'Yes' : 'No'}
+                                    <div className="table-info">
+                                        <strong>Capacity:</strong> {table.capacity}
+                                    </div>
+                                    <div className="table-info">
+                                        <strong>Location:</strong> {table.location}
+                                    </div>
+                                    <div className="table-info">
+                                        <strong>Smoking Allowed:</strong> {table.smokingAllowed ? 'Yes' : 'No'}
+                                    </div>
                                 </div>
                             </Card.Body>
                         </Card>

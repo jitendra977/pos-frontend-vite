@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -15,6 +19,11 @@ jobs:
       - name: Install SSH Client
         run: sudo apt-get install openssh-client -y
 
+      - name: Fetch and reset branch
+        run: |
+          git fetch --all
+          git reset --hard origin/main
+
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
         with:
@@ -25,5 +34,4 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}  # If your key is passphrase protected
           script: |
             cd /var/www/pos-frontend-vite
-            git pull origin main
             ./.scripts/deploy.sh

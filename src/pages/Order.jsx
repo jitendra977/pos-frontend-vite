@@ -5,77 +5,27 @@ import './dashboard.css'; // Import custom CSS file for Table
 
 const Table = () => {
     // Initialize with sample data for demonstration
-    const [tables, setTables] = useState([
-        {
-            id: 1,
-            name: "Table 1",
-            status: "AVAILABLE",
-            totalAmount: 120,
-            capacity: 2,
-            location: "Corner",
-            smokingAllowed: false
-        },
-        {
-            id: 2,
-            name: "Table 2",
-            status: "AVAILABLE",
-            totalAmount: 180,
-            capacity: 4,
-            location: "Near the window",
-            smokingAllowed: true
-        },
-        {
-            id: 3,
-            name: "Table 3",
-            status: "BOOKED",
-            totalAmount: 0,
-            capacity: 6,
-            location: "Central area",
-            smokingAllowed: false
-        },
-        {
-            id: 4,
-            name: "Table 4",
-            status: "AVAILABLE",
-            totalAmount: 90,
-            capacity: 3,
-            location: "By the bar",
-            smokingAllowed: false
-        },
-        {
-            id: 5,
-            name: "Table 5",
-            status: "AVAILABLE",
-            totalAmount: 150,
-            capacity: 2,
-            location: "Outdoor patio",
-            smokingAllowed: true
-        },
-        {
-            id: 6,
-            name: "Table 6",
-            status: "AVAILABLE",
-            totalAmount: 200,
-            capacity: 8,
-            location: "Private room",
-            smokingAllowed: false
-        }
-    ]);
-
+    const [tables, setTables] = useState([]);
     const [isMobileView, setIsMobileView] = useState(false);
-    const [loading, setLoading] = useState(false); // Initialize loading state
+    const [loading, setLoading] = useState(true); // Initialize loading state
     const [error, setError] = useState(null); // Initialize error state
 
     // Simulating fetching data with useEffect
     useEffect(() => {
-        setLoading(true); // Set loading state to true during fetch simulation
-
         // Simulate fetching data after 1 second delay
         const fetchData = async () => {
             try {
-                // Simulate fetch request
                 // Replace with actual fetch logic in your application
                 await new Promise(resolve => setTimeout(resolve, 1000));
+                const sampleTables = [
+                    { id: 1, name: "Table 1", status: "AVAILABLE", totalAmount: 120, capacity: 2, location: "Corner", smokingAllowed: false },
+                    { id: 2, name: "Table 2", status: "AVAILABLE", totalAmount: 180, capacity: 4, location: "Near the window", smokingAllowed: true },
+                    { id: 3, name: "Table 3", status: "BOOKED", totalAmount: 0, capacity: 6, location: "Central area", smokingAllowed: false },
+                    { id: 4, name: "Table 4", status: "AVAILABLE", totalAmount: 90, capacity: 3, location: "By the bar", smokingAllowed: false },
+                    { id: 5, name: "Table 5", status: "AVAILABLE", totalAmount: 150, capacity: 2, location: "Outdoor patio", smokingAllowed: true },
+                    { id: 6, name: "Table 6", status: "AVAILABLE", totalAmount: 200, capacity: 8, location: "Private room", smokingAllowed: false }
+                ];
+                setTables(sampleTables);
                 setLoading(false); // Set loading state to false after simulated fetch
             } catch (error) {
                 setError(error); // Set error state if fetch fails

@@ -22,6 +22,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: cd /var/www/pos-frontend-vite
             ./.scripts/deploy.sh
             

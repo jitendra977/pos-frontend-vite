@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, Form, Row, Col, Card } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { BASE_URL } from '../../constant/constant';
-import '../../assets/css/customer.css'
+import '../../assets/css/customer.css';
+
 const Customers = () => {
   const [customers, setCustomers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -52,21 +53,30 @@ const Customers = () => {
     <div className="mobile-list-view">
       {filteredCustomers.map((customer) => (
         <Card key={customer.id} className="mb-3">
-          <Card.Body>
-            <Card.Title>{customer.name}</Card.Title>
-            <Card.Text>
-              <strong>Phone:</strong> {customer.phone_number} <br />
-              <strong>Address:</strong> {customer.address} <br />
-              <strong>Email:</strong> {customer.email}
-            </Card.Text>
-            <Button
-              style={{ marginRight: "10px" }}
-              onClick={() => confirmDelete(customer.id)}
-              variant="danger"
-            >
-              Delete
-            </Button>
-            <Button>Edit</Button>
+          <Card.Body className="d-flex align-items-center">
+            <div className="flex-grow-1">
+              <Card.Title>{customer.name}</Card.Title>
+              <Card.Text>
+                <strong>Phone:</strong> {customer.phone_number} <br />
+                <strong>Address:</strong> {customer.address} <br />
+                <strong>Email:</strong> {customer.email}
+              </Card.Text>
+            </div>
+            <img
+              src="/src/assets/images/arjun.JPG" // Replace with the actual path to the customer photo
+              alt="Customer"
+              className="customer-photo"
+            />
+            <div className="ml-auto">
+              <Button
+                style={{ marginRight: "10px" }}
+                onClick={() => confirmDelete(customer.id)}
+                variant="danger"
+              >
+                Delete
+              </Button>
+              <Button>Edit</Button>
+            </div>
           </Card.Body>
         </Card>
       ))}

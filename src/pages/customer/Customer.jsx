@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Form, Row, Col } from 'react-bootstrap';
+import { Table, Button, Form, Row, Col, Card } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { BASE_URL } from '../../constant/constant';
-
+import '../../assets/css/customer.css'
 const Customers = () => {
   const [customers, setCustomers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -48,6 +48,31 @@ const Customers = () => {
     customer.address.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const renderMobileListView = () => (
+    <div className="mobile-list-view">
+      {filteredCustomers.map((customer) => (
+        <Card key={customer.id} className="mb-3">
+          <Card.Body>
+            <Card.Title>{customer.name}</Card.Title>
+            <Card.Text>
+              <strong>Phone:</strong> {customer.phone_number} <br />
+              <strong>Address:</strong> {customer.address} <br />
+              <strong>Email:</strong> {customer.email}
+            </Card.Text>
+            <Button
+              style={{ marginRight: "10px" }}
+              onClick={() => confirmDelete(customer.id)}
+              variant="danger"
+            >
+              Delete
+            </Button>
+            <Button>Edit</Button>
+          </Card.Body>
+        </Card>
+      ))}
+    </div>
+  );
+
   return (
     <>
       <h1>Customer Management</h1>
@@ -73,40 +98,45 @@ const Customers = () => {
           />
         </Col>
       </Row>
-      <div className="table-responsive">
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Phone Number</th>
-              <th>Address</th>
-              <th>Email</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredCustomers.map((customer) => (
-              <tr key={customer.id}>
-                <td>{customer.id}</td>
-                <td>{customer.name}</td>
-                <td>{customer.phone_number}</td>
-                <td>{customer.address}</td>
-                <td>{customer.email}</td>
-                <td>
-                  <Button
-                    style={{ marginRight: "10px" }}
-                    onClick={() => confirmDelete(customer.id)}
-                    variant="danger"
-                  >
-                    Delete
-                  </Button>
-                  <Button>Edit</Button>
-                </td>
+      <div className="table-container">
+        <div className="desktop-table-view">
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {filteredCustomers.map((customer) => (
+                <tr key={customer.id}>
+                  <td>{customer.id}</td>
+                  <td>{customer.name}</td>
+                  <td>{customer.phone_number}</td>
+                  <td>{customer.address}</td>
+                  <td>{customer.email}</td>
+                  <td>
+                    <Button
+                      style={{ marginRight: "10px" }}
+                      onClick={() => confirmDelete(customer.id)}
+                      variant="danger"
+                    >
+                      Delete
+                    </Button>
+                    <Button>Edit</Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+        <div className="mobile-list-view">
+          {renderMobileListView()}
+        </div>
       </div>
     </>
   );

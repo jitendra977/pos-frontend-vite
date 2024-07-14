@@ -47,31 +47,40 @@ const Table = () => {
         return (
             <Row xs={1} md={2} lg={3} className="g-4">
                 {tables.map((table) => (
-                    <Col key={table.id}>
-                        <Card className={`table-card ${getStatusColorClass(table.status)}`}>
-                            <Card.Body>
-                                <Card.Title className="text-center"><FaChair className="me-2 icon" /> {table.name}</Card.Title>
-                                <hr />
-                                <div className="table-details">
-                                    <div className="table-info">
-                                        <strong>Status:</strong> <Badge bg={getStatusBadgeVariant(table.status)}>{table.status}</Badge>
-                                    </div>
-                                    <div className="table-info">
-                                        <strong>Total Amount:</strong> ${table.totalAmount}
-                                    </div>
-                                    <div className="table-info">
-                                        <strong>Capacity:</strong> {table.capacity}
-                                    </div>
-                                    <div className="table-info">
-                                        <strong>Location:</strong> {table.location}
-                                    </div>
-                                    <div className="table-info">
-                                        <strong>Smoking Allowed:</strong> {table.smokingAllowed ? 'Yes' : 'No'}
-                                    </div>
-                                </div>
-                            </Card.Body>
-                        </Card>
-                    </Col>
+                   <Col key={table.id}>
+                   <Card className={`table-card ${getStatusColorClass(table.status)}`}>
+                       <Card.Body>
+                           <div className="table-details">
+                               <Card.Title className="text-center mb-3">
+                                   <FaChair className="me-2 icon" /> {table.name}
+                               </Card.Title>
+                               <hr />
+                               <div className="table-info mb-2">
+                                   <strong>Status:</strong>{' '}
+                                   <Badge bg={getStatusBadgeVariant(table.status)}>{table.status}</Badge>
+                               </div>
+                               <div className="table-info mb-2">
+                                   <strong>Total Amount:</strong> ${table.totalAmount}
+                               </div>
+                               <div className="table-info mb-2">
+                                   <strong>Capacity:</strong> {table.capacity}
+                               </div>
+                               <div className="table-info mb-2">
+                                   <strong>Location:</strong> {table.location}
+                               </div>
+                               <div className="table-info">
+                                   <strong>Smoking Allowed:</strong>{' '}
+                                   {table.smokingAllowed ? 'Yes' : 'No'}
+                               </div>
+                               <div className="text-center mt-3">
+                                   <button className="btn btn-primary me-2">Book Table</button>
+                                   <button className="btn btn-secondary">View Details</button>
+                               </div>
+                           </div>
+                       </Card.Body>
+                   </Card>
+               </Col>
+               
                 ))}
             </Row>
         );

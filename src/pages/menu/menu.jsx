@@ -164,7 +164,7 @@ const Menus = () => {
             onMouseEnter={() => handleImageHover(menu.id)}
             onMouseLeave={() => handleImageHover(null)}
           >
-            <Card.Header>{menu.name}</Card.Header>
+            <Card.Header><strong>{menu.name.toUpperCase()}</strong></Card.Header>
             <Card.Body className="d-flex justify-content-between align-items-start">
               <div>
                 <Card.Text>

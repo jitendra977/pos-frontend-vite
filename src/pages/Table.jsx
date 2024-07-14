@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Badge, Alert } from 'react-bootstrap';
 import { FaChair } from 'react-icons/fa';
-import '../assets/css/ordertable.css';
 
 const Table = () => {
     const [tables, setTables] = useState([]);

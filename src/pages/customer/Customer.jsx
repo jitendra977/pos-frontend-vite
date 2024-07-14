@@ -1,14 +1,15 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Form, Row, Col, Card } from 'react-bootstrap';
+import { Table, Button, Form, Row, Col, Card, Image } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { BASE_URL } from '../../constant/constant';
+import CustomerImg from '../../assets/images/Item/image.png';
 import '../../assets/css/customer.css';
 
 const Customers = () => {
   const [customers, setCustomers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-
+  const [hoveredcustomerId, setHoveredcustomerId] = useState(null);
   useEffect(() => {
     fetchCustomers();
   }, []);
@@ -25,7 +26,19 @@ const Customers = () => {
       console.error("Error fetching customers:", error);
     }
   };
+  const handleEdit = (id) => {
+    // Handle edit functionality
+    console.log("Edit customer with id:", id);
+  };
 
+  const handleDelete = (id) => {
+    // Handle delete functionality
+    console.log("Delete customer with id:", id);
+  };
+
+  const handleImageHover = (id) => {
+    setHoveredcustomerId(id);
+  };
   const confirmDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this customer?")) {
       try {
@@ -85,42 +98,51 @@ const Customers = () => {
   );
 
   const renderMobileListView = () => (
-    <div className="mobile-list-view">
-      {filteredCustomers.map((customer) => (
-        <Card
-          key={customer.id}
-          className="mb-3"
-          onTouchStart={handleSwipeStart}
-          onTouchMove={(e) => handleSwipeMove(e, customer.id)}
-          onTouchEnd={(e) => handleSwipeEnd(e, customer.id)}
-        >
-          <Card.Body className="d-flex align-items-center">
-            <div className="flex-grow-1">
-              <Card.Title>{customer.name}</Card.Title>
-              <Card.Text>
-                <strong>Phone:</strong> {customer.phone_number} <br />
-                <strong>Address:</strong> {customer.address} <br />
-                <strong>Email:</strong> {customer.email}
-              </Card.Text>
-            </div>
-            <img
-              src="/src/assets/images/arjun.JPG" // Replace with the actual path to the customer photo
-              alt="Customer"
-              className="customer-photo"
-            />
-            <div className="actions">
-              <Button
-                style={{ marginRight: "10px" }}
-                variant="danger"
-              >
-                Delete
-              </Button>
-              <Button>Edit</Button>
-            </div>
-          </Card.Body>
-        </Card>
-      ))}
-    </div>
+    <div className="list-group d-block d-md-none">
+        {customers.map((customer) => (
+          <Card
+            key={customer.id}
+            className="mb-3 shadow-sm"
+            onMouseEnter={() => handleImageHover(customer.id)}
+            onMouseLeave={() => handleImageHover(null)}
+          >
+            <Card.Header><strong>{customer.name.toUpperCase()}</strong></Card.Header>
+            <Card.Body className="d-flex justify-content-between align-items-start">
+              <div>
+                <Card.Text>
+                  <strong>ID:</strong> {customer.id}<br/>
+                  <strong>Phone Number:</strong> {customer.phone_number}<br/>
+                  <strong>Address:</strong> {customer.address}<br/>
+                  <strong>Email:</strong> {customer.email }
+                </Card.Text>
+              </div>
+              <Image
+                src={CustomerImg}
+                alt={customer.name}
+                className="ml-3"
+                style={{ width: '150px', height: 'auto', cursor: 'pointer' }}
+              />
+              {hoveredcustomerId === customer.id && (
+                <div className="position-absolute top-0 end-0 m-2">
+                  <Button
+                    variant="danger"
+                    className="me-2"
+                    onClick={() => (customer.id)}
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    variant="warning"
+                    onClick={() => (customer.id)}
+                  >
+                    Edit
+                  </Button>
+                </div>
+              )}
+            </Card.Body>
+          </Card>
+        ))}
+      </div>
   );
 
   return (
@@ -131,7 +153,7 @@ const Customers = () => {
           <Button as={NavLink} to="/add-customer" variant="primary">Add Customer</Button>
         </Col>
         <Col>
-          <Form.Select aria-label="Filter Item">
+          <Form.Select aria-label="Filter Item" onChange={(e) => setSearchTerm(e.target.value)}>
             <option value="">Filter by...</option>
             <option value="name">Name</option>
             <option value="phone">Phone Number</option>

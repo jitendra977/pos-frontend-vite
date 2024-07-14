@@ -1,0 +1,165 @@
+/* About.css */
+
+/* Global styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* Profile Card styles */
+.profile-card {
+  border: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  background-color: #fff;
+  text-align: left;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+}
+
+.profile-name {
+  font-size: 2.5rem;
+  color: #007bff;
+}
+
+.profile-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #6c757d;
+  margin-bottom: 20px;
+}
+
+.profile-bio {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.profile-links {
+  margin-top: 20px;
+}
+
+.profile-link {
+  color: #007bff;
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+.profile-link:hover {
+  text-decoration: underline;
+}
+
+/* Skills Card styles */
+.skills-card {
+  border: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  background-color: #fff;
+  text-align: left;
+}
+
+.section-title {
+  font-size: 2rem;
+  color: #007bff;
+  margin-bottom: 30px;
+}
+
+.skill-category {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #6c757d;
+  margin-bottom: 20px;
+}
+
+/* Experience Card styles */
+.experience-card {
+  border: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  background-color: #fff;
+  text-align: left;
+}
+
+.experience-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.experience-company {
+  font-size: 1.2rem;
+  color: #6c757d;
+  margin-bottom: 10px;
+}
+
+.experience-date {
+  font-size: 1rem;
+  color: #6c757d;
+}
+
+.experience-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* Education Card styles */
+.education-card {
+  border: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  background-color: #fff;
+  text-align: left;
+}
+
+.education-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.education-institution {
+  font-size: 1.2rem;
+  color: #6c757d;
+  margin-bottom: 10px;
+}
+
+.education-date {
+  font-size: 1rem;
+  color: #6c757d;
+}
+
+.education-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* Interests Card styles */
+.interests-card {
+  border: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  background-color: #fff;
+  text-align: left;
+}
+
+.interests-card .section-title {
+  font-size: 2rem;
+  color: #007bff;
+  margin-bottom: 30px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .profile-card,
+  .skills-card,
+  .experience-card,
+  .education-card,
+  .interests-card {
+    padding: 30px;
+  }
+}

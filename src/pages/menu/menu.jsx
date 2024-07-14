@@ -25,7 +25,7 @@ const Menus = () => {
       const result = await response.json();
       setMenus(result);
     } catch (error) {
-      console.error("Error fetching menus:", error);
+      console.error("Error the fetching menus:", error);
     }
   };
 

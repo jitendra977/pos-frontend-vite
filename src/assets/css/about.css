@@ -1,0 +1,73 @@
+.about-container {
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .profile-card, .skills-card, .experience-card, .education-card, .interests-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-name {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #007bff;
+  }
+  
+  .profile-title {
+    font-size: 1.25rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+  }
+  
+  .profile-bio {
+    font-size: 1rem;
+    color: #343a40;
+  }
+  
+  .profile-links .profile-link {
+    font-size: 1rem;
+    color: #007bff;
+    text-decoration: none;
+    margin-right: 0.5rem;
+  }
+  
+  .profile-links .profile-link:hover {
+    text-decoration: underline;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 1.5rem;
+  }
+  
+  .skill-category, .experience-title, .education-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #343a40;
+  }
+  
+  .experience-company, .education-institution {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 0.25rem;
+  }
+  
+  .experience-date, .education-date {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+  }
+  
+  .experience-description, .education-description {
+    font-size: 1rem;
+    color: #343a40;
+  }
+  
+  .list-unstyled {
+    padding-left: 0;
+    list-style: none;
+  }
+  

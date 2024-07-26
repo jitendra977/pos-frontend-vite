@@ -21,7 +21,7 @@ const AddMenuItem = () => {
 
   const fetchCategory = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/menu/category`, {
+      const response = await fetch(`${BASE_URL}/api/categories`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ const AddMenuItem = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${BASE_URL}/menu/`, {
+      const response = await fetch(`${BASE_URL}/api/menus`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

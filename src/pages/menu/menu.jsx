@@ -18,7 +18,7 @@ const Menus = () => {
 
   const fetchMenus = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/menu/`);
+      const response = await fetch(`${BASE_URL}/api/menus`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -31,7 +31,7 @@ const Menus = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/menu/category`);
+      const response = await fetch(`${BASE_URL}/api/categories`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -50,7 +50,7 @@ const Menus = () => {
 
   const deleteMenu = async (id) => {
     try {
-      const response = await fetch(`${BASE_URL}/menu/${id}`, {
+      const response = await fetch(`${BASE_URL}/api/menus/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) {
@@ -72,8 +72,7 @@ const Menus = () => {
   };
 
   const handleDelete = (id) => {
-    // Handle delete functionality
-    console.log("Delete menu with id:", id);
+    confirmDelete(id);
   };
 
   const handleImageHover = (id) => {
@@ -130,8 +129,8 @@ const Menus = () => {
           </thead>
           <tbody>
             {displayMenus.map((menu) => (
-              <tr key={menu.id}>
-                <td>{menu.id}</td>
+              <tr key={menu.itemId}>
+                <td>{menu.itemId}</td>
                 <td>{menu.name}</td>
                 <td>{menu.description}</td>
                 <td>{menu.price}</td>
@@ -139,14 +138,14 @@ const Menus = () => {
                 <td>
                   <Button
                     style={{ marginRight: "10px" }}
-                    onClick={() => confirmDelete(menu.id)}
+                    onClick={() => confirmDelete(menu.itemId)}
                     variant="danger"
                   >
                     Delete
                   </Button>
                   <Button
                     className="btn-edit"
-                    onClick={() => handleEdit(menu.id)}
+                    onClick={() => handleEdit(menu.itemId)}
                   >
                     Edit
                   </Button>
@@ -159,16 +158,16 @@ const Menus = () => {
       <div className="list-group d-block d-md-none">
         {displayMenus.map((menu) => (
           <Card
-            key={menu.id}
+            key={menu.itemId}
             className="mb-3 shadow-sm"
-            onMouseEnter={() => handleImageHover(menu.id)}
+            onMouseEnter={() => handleImageHover(menu.itemId)}
             onMouseLeave={() => handleImageHover(null)}
           >
             <Card.Header>{menu.name}</Card.Header>
             <Card.Body className="d-flex justify-content-between align-items-start">
               <div>
                 <Card.Text>
-                  <strong>ID:</strong> {menu.id}<br/>
+                  <strong>ID:</strong> {menu.itemId}<br/>
                   <strong>Description:</strong> {menu.description}<br/>
                   <strong>Price:</strong> ${menu.price}<br/>
                   <strong>Category:</strong> {menu.category ? menu.category.name : 'Uncategorized'}
@@ -180,18 +179,18 @@ const Menus = () => {
                 className="ml-3"
                 style={{ width: '150px', height: 'auto', cursor: 'pointer' }}
               />
-              {hoveredMenuId === menu.id && (
+              {hoveredMenuId === menu.itemId && (
                 <div className="position-absolute top-0 end-0 m-2">
                   <Button
                     variant="danger"
                     className="me-2"
-                    onClick={() => handleDelete(menu.id)}
+                    onClick={() => handleDelete(menu.itemId)}
                   >
                     Delete
                   </Button>
                   <Button
                     variant="warning"
-                    onClick={() => handleEdit(menu.id)}
+                    onClick={() => handleEdit(menu.itemId)}
                   >
                     Edit
                   </Button>

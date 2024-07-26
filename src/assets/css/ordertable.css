@@ -1,28 +1,29 @@
-/* dashboard.css */
-
 .table-card {
-    border: none; /* Remove default border */
-    background-color: #f8f9fa; /* Light background color */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-    transition: transform 0.3s ease; /* Smooth transition on hover */
-}
-
-.table-card:hover {
-    transform: translateY(-5px); /* Lift card on hover */
-}
-
-.table-card .card-body {
-    padding: 1.5rem; /* Add padding inside the card body */
-}
-
-.table-card .table-details {
-    margin-top: 1rem; /* Margin for table details section */
-}
-
-.table-card .table-info {
-    margin-bottom: 0.5rem; /* Adjust spacing between table info items */
+    border: 1px solid black; /* Thin black border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: none; /* Remove shadow */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    font-size: 0.875rem; /* Adjust font size */
 }
 
 .table-card .icon {
-    vertical-align: middle; /* Align icon vertically */
+    color: #007bff; /* Customize icon color if needed */
 }
+
+.table-details {
+    margin: 0; /* Remove margin */
+}
+
+.table-info {
+    margin: 0; /* Remove margin */
+    padding: 8px 0; /* Add some spacing between info items */
+}
+
+/* Responsive styles */
+@media (max-width: 575px) {
+    .table-card {
+        font-size: 0.75rem; /* Smaller font size for very small screens */
+    }
+}
+

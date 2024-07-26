@@ -15,6 +15,7 @@ import Contact from './pages/Contact';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import AddMenuItem from './pages/menu/AddMenuItem';
+import OrderPage from './pages/Order/Order';
 function App() {
   return (
     
@@ -28,6 +29,7 @@ function App() {
           <Route exact path="/bar-menu" element={<BarMenu />} />
           <Route exact path="/menu" element={<Menus />} />
           <Route exact path="/addMenuItem" element={<AddMenuItem />} />
+          <Route exact path="/order-page/:tableId" element={<OrderPage />} />
           <Route exact path="/other" element={<Other />} />
           <Route exact path="/add-customer" element={<AddCustomer />} />
           <Route exact path="/about" element={<About/>} />

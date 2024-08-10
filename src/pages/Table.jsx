@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Badge, Alert, Button } from 'react-bootstrap';
+import { FaChair } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import '../assets/css/ordertable.css';
 import { BASE_URL } from '../constant/constant';

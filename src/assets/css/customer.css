@@ -1,53 +1,53 @@
 /* customer.css */
 
 .card-body {
-    display: flex;
-    align-items: center;
-    padding: 0.5rem;
-    background-color: #fff;
-    transition: transform 0.3s ease;
-  }
-  
-  .card-body.swipe-left {
-    transform: translateX(-100%); /* Moves the card completely out */
-  }
-  
-  .card-body.swipe-right {
-    transform: translateX(100%); /* Moves the card completely out */
-  }
-  
-  .card-body .customer-photo {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 1rem;
-  }
-  
-  .card-body .actions {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f8f9fa;
-    padding: 0.5rem;
-  }
-  
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: #fff;
+  transition: transform 0.3s ease;
+}
+
+.card-body.swipe-left {
+  transform: translateX(-100%); /* Moves the card completely out to the left */
+}
+
+.card-body.swipe-right {
+  transform: translateX(100%); /* Moves the card completely out to the right */
+}
+
+.card-body .customer-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+
+.card-body .actions {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+  padding: 0.5rem;
+}
+
 /* Responsive design to hide desktop view on mobile */
 @media (max-width: 768px) {
   .desktop-table-view {
-    display: none;
+      display: none;
   }
   .mobile-list-view {
-    display: block;
+      display: block;
   }
 }
 
 /* Hide mobile view on desktop */
 @media (min-width: 769px) {
   .mobile-list-view {
-    display: none;
+      display: none;
   }
 }

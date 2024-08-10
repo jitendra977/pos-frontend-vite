@@ -1,5 +1,3 @@
-/* OrderPage.css
-
 /* Full-width card */
 .full-width-card {
   width: 100%;
@@ -80,4 +78,6 @@
 }
 
 .category-tab:hover {
-  background-color: #e6f0ff; /* Light background */
+  background-color: #e6f0ff; /* Light background on hover */
+  color: #007bff; /* Text color on hover */
+}

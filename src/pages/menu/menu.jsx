@@ -13,22 +13,24 @@ const Menus = () => {
   const [editingMenuId, setEditingMenuId] = useState(null);
   const [editableMenu, setEditableMenu] = useState({});
 
+  // Fetch menus data
   useEffect(() => {
     const fetchData = async () => {
       try {
         const menusResponse = await axios.get('menu-items');
         setMenus(menusResponse.data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching menus:", error);
       }
     };
     fetchData();
   }, []);
 
+  // Fetch categories data
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const categoriesResponse = await axios.get('categories'); // Adjust API endpoint as needed
+        const categoriesResponse = await axios.get('categories'); // Adjust API endpoint if needed
         setCategories(categoriesResponse.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -37,6 +39,7 @@ const Menus = () => {
     fetchCategories();
   }, []);
 
+  // Handle delete action
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
       try {
@@ -48,11 +51,13 @@ const Menus = () => {
     }
   };
 
+  // Start editing a menu item
   const handleEditClick = (menu) => {
     setEditingMenuId(menu.itemId);
     setEditableMenu({ ...menu });
   };
 
+  // Handle input change for editing
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditableMenu(prev => ({
@@ -61,30 +66,37 @@ const Menus = () => {
     }));
   };
 
+  // Handle category change for editing
   const handleCategoryChange = (e) => {
+    const { value } = e.target;
     setEditableMenu(prev => ({
       ...prev,
-      categoryName: e.target.value
+      categoryName: value
     }));
   };
 
+  // Save updated menu item
   const handleSave = async () => {
     try {
-      await axios.put(`menu-items/${editableMenu.itemId}`, editableMenu);
-      setMenus(menus.map(menu =>
-        menu.itemId === editableMenu.itemId ? editableMenu : menu
-      ));
+      const response = await axios.put(`menu-items/${editableMenu.itemId}`, editableMenu);
+      const updatedMenus = menus.map(menu =>
+        menu.itemId === editableMenu.itemId ? response.data : menu
+      );
+      setMenus(updatedMenus);
       setEditingMenuId(null);
+      setEditableMenu({});
     } catch (error) {
       console.error("Error updating menu:", error);
     }
   };
 
+  // Cancel editing
   const handleCancel = () => {
     setEditingMenuId(null);
     setEditableMenu({});
   };
 
+  // Filter menus based on search term and filter criteria
   const filteredMenus = menus.filter(menu => {
     const term = searchTerm.toLowerCase();
     if (!filterBy) {

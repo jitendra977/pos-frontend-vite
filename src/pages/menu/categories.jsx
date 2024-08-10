@@ -10,7 +10,7 @@ const Categories = () => {
   const [hoveredCategoryId, setHoveredCategoryId] = useState(null);
   const [editingCategoryId, setEditingCategoryId] = useState(null);
   const [editableCategory, setEditableCategory] = useState({});
-
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
@@ -25,16 +25,23 @@ const Categories = () => {
     fetchData();
   }, []);
 
-  const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this category?")) {
-      try {
-        await axios.delete(`categories/${id}`);
-        setCategories(categories.filter(category => category.id !== id));
-      } catch (error) {
-        console.error("Error deleting category:", error);
-      }
+// Handle delete action
+const handleDelete = async (id) => {
+  if (window.confirm("Are you sure you want to delete this category?")) {
+    try {
+      await axios.delete(`categories/${id}`);
+      setCategories(categories.filter(category => category.id !== id));
+      setErrorMessage(''); // Clear any previous error message
+    } catch (error) {
+      console.error("Error deleting category:", error);
+      setErrorMessage('Failed to delete category: ' + (error.response?.data || error.message));
     }
-  };
+  }
+};
+
+
+ 
+
 
   const handleEditClick = (category) => {
     setEditingCategoryId(category.id);
@@ -79,6 +86,14 @@ const Categories = () => {
 
   return (
     <Container>
+       <div>
+    {errorMessage && (
+      <div className="alert alert-danger">
+        {errorMessage}
+      </div>
+    )}
+    {/* Render categories and other UI elements */}
+  </div>
       <h1>Category Management</h1>
       <Row className="mb-4">
         <Col md={4} sm={12}>

@@ -17,7 +17,7 @@ const Customers = () => {
 
   const fetchCustomers = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/customer/`);
+      const response = await fetch(`${BASE_URL}/customer`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

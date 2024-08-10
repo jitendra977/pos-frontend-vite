@@ -16,12 +16,9 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import AddMenuItem from './pages/menu/AddMenuItem';
 import OrderPage from './pages/Order/Order';
-<<<<<<< HEAD
-=======
 import Categories from './pages/menu/categories';
 import AddCategory from './pages/menu/AddCategory';
 
->>>>>>> 4c54dd4 (merge local all)
 function App() {
   return (
     

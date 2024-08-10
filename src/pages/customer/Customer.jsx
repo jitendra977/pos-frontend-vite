@@ -12,6 +12,7 @@ const Customers = () => {
   const [hoveredcustomerId, setHoveredcustomerId] = useState(null);
   useEffect(() => {
     fetchCustomers();
+   
   }, []);
 
   const fetchCustomers = async () => {

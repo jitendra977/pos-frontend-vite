@@ -1,6 +1,11 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Badge, Alert } from 'react-bootstrap';
-import { FaChair } from 'react-icons/fa';
+
+import { Container, Row, Col, Card, Badge, Alert, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import '../assets/css/ordertable.css';
+import { BASE_URL } from '../constant/constant';
+
 
 const Table = () => {
     const [tables, setTables] = useState([]);
@@ -10,23 +15,20 @@ const Table = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Remove the setTimeout to fetch data instantly
-                const sampleTables = [
-                    { id: 1, name: "Table 1", status: "AVAILABLE", totalAmount: 120, capacity: 2, location: "Corner", smokingAllowed: false },
-                    { id: 2, name: "Table 2", status: "AVAILABLE", totalAmount: 180, capacity: 4, location: "Near the window", smokingAllowed: true },
-                    { id: 3, name: "Table 3", status: "BOOKED", totalAmount: 0, capacity: 6, location: "Central area", smokingAllowed: false },
-                    { id: 4, name: "Table 4", status: "AVAILABLE", totalAmount: 90, capacity: 3, location: "By the bar", smokingAllowed: false },
-                    { id: 5, name: "Table 5", status: "AVAILABLE", totalAmount: 150, capacity: 2, location: "Outdoor patio", smokingAllowed: true },
-                    { id: 6, name: "Table 6", status: "AVAILABLE", totalAmount: 200, capacity: 8, location: "Private room", smokingAllowed: false }
-                ];
-                setTables(sampleTables);
-                setLoading(false);
+                const response = await fetch(`${BASE_URL}/api/tables`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const result = await response.json();
+                console.log("Fetched data:", result);
+                setTables(result.data || []);
             } catch (error) {
+                console.error("Error fetching data:", error);
                 setError(error);
+            } finally {
                 setLoading(false);
             }
         };
-        
 
         fetchData();
     }, []);
@@ -40,25 +42,28 @@ const Table = () => {
             return <Alert variant="danger">Error fetching tables: {error.message}</Alert>;
         }
 
-        if (tables.length === 0) {
+        if (!Array.isArray(tables) || tables.length === 0) {
             return <Alert variant="warning">No tables available.</Alert>;
         }
 
         return (
-            <Row xs={1} md={2} lg={3} className="g-4">
+            <Row xs={1} md={2} lg={3} className="g-3">
                 {tables.map((table) => (
-                    <Col key={table.id}>
+                    <Col key={table.tableId}>
                         <Card className={`table-card ${getStatusColorClass(table.status)}`}>
                             <Card.Body>
+
+                                <Card.Title>Table {table.tableNumber}</Card.Title>
+
                                 
-                                <hr />
+
                                 <div className="table-details">
                                     <Card.Title className="text-center"><FaChair className="me-2 icon" /> {table.name}</Card.Title>
                                     <div className="table-info">
                                         <strong>Status:</strong> <Badge bg={getStatusBadgeVariant(table.status)}>{table.status}</Badge>
                                     </div>
                                     <div className="table-info">
-                                        <strong>Total Amount:</strong> ${table.totalAmount}
+                                        <strong>Current Order:</strong> {table.currentOrder || 'None'}
                                     </div>
                                     <div className="table-info">
                                         <strong>Capacity:</strong> {table.capacity}
@@ -68,6 +73,11 @@ const Table = () => {
                                     </div>
                                     <div className="table-info">
                                         <strong>Smoking Allowed:</strong> {table.smokingAllowed ? 'Yes' : 'No'}
+                                    </div>
+                                    <div className="table-info mt-2">
+                                        <Link to={`/order-page/${table.tableId}`}>
+                                            <Button variant="primary">View Orders</Button>
+                                        </Link>
                                     </div>
                                 </div>
                             </Card.Body>
@@ -83,6 +93,7 @@ const Table = () => {
             case 'AVAILABLE':
                 return 'success';
             case 'BOOKED':
+            case 'OCCUPIED':
                 return 'warning';
             default:
                 return 'primary';
@@ -94,6 +105,7 @@ const Table = () => {
             case 'AVAILABLE':
                 return 'available';
             case 'BOOKED':
+            case 'OCCUPIED':
                 return 'booked';
             default:
                 return '';

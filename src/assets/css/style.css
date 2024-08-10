@@ -1,67 +1,83 @@
-/* styles.css */
-body {
-    background-color: #f8f9fa;
-  }
-  
-  .card {
-    border-radius: 10px;
-  }
-  
-  .card-body h1 {
-    font-size: 2rem;
-    color: #343a40;
-  }
-  
-  .table th,
-  .table td {
-    vertical-align: middle;
-  }
-  
-  .table th {
-    background-color: #343a40;
-    color: #fff;
-  }
-  
-  .table-striped tbody tr:nth-of-type(odd) {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-  
-  .table-hover tbody tr:hover {
-    background-color: rgba(0, 0, 0, 0.075);
-  }
-  
-  .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-  }
-  
-  .btn-danger {
-    background-color: #dc3545;
-    border-color: #dc3545;
-  }
-  
-  .btn-warning {
-    background-color: #ffc107;
-    border-color: #ffc107;
-  }
-  
-  .table-responsive {
-    margin-top: 1rem;
-  }
-  
-  .list-group .card {
-    margin-bottom: 1rem;
-  }
-  
-  @media (max-width: 767.98px) {
-    .table-responsive {
-      display: none;
-    }
-  }
-  
-  @media (min-width: 768px) {
-    .list-group {
-      display: none;
-    }
-  }
-  
+/* OrderPage.css */
+
+/* Full-width card */
+.full-width-card {
+  width: 100%;
+}
+
+/* Button grid container */
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px; /* Space between buttons */
+  width: 100%; /* Ensure the grid takes up full width */
+}
+
+/* Button styling */
+.item-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  border: 2px solid #007bff; /* Button border color */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: white; /* Background color */
+  color: #007bff; /* Text color */
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  width: 100%; /* Full width of the grid item */
+  height: auto; /* Adjust height automatically */
+}
+
+.item-button:hover {
+  background-color: #007bff; /* Background color on hover */
+  color: white; /* Text color on hover */
+  border-color: #0056b3; /* Border color on hover */
+  transform: translateY(-2px);
+}
+
+.item-icon {
+  font-size: 2rem; /* Adjust icon size */
+  margin-bottom: 10px; /* Space between icon and text */
+}
+
+.item-info h5 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.item-info p.item-price {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+/* Category tab styling */
+.category-tabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-tab {
+  display: block;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #007bff; /* Border color */
+  border-radius: 5px;
+  background-color: white;
+  color: #007bff; /* Text color */
+  text-align: center;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.category-tab.active {
+  background-color: #007bff; /* Background color for active tab */
+  color: white; /* Text color for active tab */
+}
+
+.category-tab:hover {
+  background-color: #e6f0ff; /* Light background

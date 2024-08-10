@@ -1,11 +1,17 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4c54dd4 (merge local all)
 import { Container, Row, Col, Card, Badge, Alert, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import '../assets/css/ordertable.css';
 import { BASE_URL } from '../constant/constant';
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4c54dd4 (merge local all)
 
 const Table = () => {
     const [tables, setTables] = useState([]);
@@ -15,7 +21,11 @@ const Table = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+<<<<<<< HEAD
                 const response = await fetch(`${BASE_URL}/api/tables`);
+=======
+                const response = await fetch(`${BASE_URL}/tables`);
+>>>>>>> 4c54dd4 (merge local all)
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -52,11 +62,15 @@ const Table = () => {
                     <Col key={table.tableId}>
                         <Card className={`table-card ${getStatusColorClass(table.status)}`}>
                             <Card.Body>
+<<<<<<< HEAD
 
                                 <Card.Title>Table {table.tableNumber}</Card.Title>
 
                                 
 
+=======
+                                <Card.Title>Table {table.tableNumber}</Card.Title>
+>>>>>>> 4c54dd4 (merge local all)
                                 <div className="table-details">
                                     <Card.Title className="text-center"><FaChair className="me-2 icon" /> {table.name}</Card.Title>
                                     <div className="table-info">

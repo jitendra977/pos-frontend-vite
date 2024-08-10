@@ -21,7 +21,11 @@ const AddMenuItem = () => {
 
   const fetchCategory = async () => {
     try {
+<<<<<<< HEAD
       const response = await fetch(`${BASE_URL}/api/categories`, {
+=======
+      const response = await fetch(`${BASE_URL}/categories`, {
+>>>>>>> 4c54dd4 (merge local all)
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -47,7 +51,11 @@ const AddMenuItem = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+<<<<<<< HEAD
       const response = await fetch(`${BASE_URL}/api/menus`, {
+=======
+      const response = await fetch(`${BASE_URL}/menu-items`, {
+>>>>>>> 4c54dd4 (merge local all)
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -14,10 +14,10 @@ import AddCustomer from './pages/customer/AddCustomer';
 import Contact from './pages/Contact';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import AddMenuItem from './pages/menu/AddMenuItem';
 import OrderPage from './pages/Order/Order';
 import Categories from './pages/menu/categories';
 import AddCategory from './pages/menu/AddCategory';
+import AddMenuItem from './pages/menu/AddMenuItem';
 
 function App() {
   return (
@@ -40,6 +40,8 @@ function App() {
           <Route exact path="/customer" element={<Customer/>} />
           <Route exact path="/categories" element={<Categories/>} />
           <Route exact path="/addCategory" element={<AddCategory/>} />
+          <Route exact path="/addMenu" element={<AddMenuItem/>} />
+
           {/* Add more routes here as needed */}
         </Routes>
         

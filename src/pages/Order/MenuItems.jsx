@@ -1,21 +1,16 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
-
-
+import "../../assets/css/menucard.css"
 const MenuItems = ({ filteredMenuItems, handleAddToCart }) => {
   return (
     <Row>
       {filteredMenuItems.map((item) => (
-        <Col md={4} key={item.itemId} className="mb-4">
+        <Col md={4} sm={6} xs={12} key={item.itemId} className="mb-4">
           <Card className="menu-item-card">
-            <Card.Img variant="top" src={item.imageUrl} alt={item.name} />
             <Card.Body>
-              <Card.Title>{item.name}</Card.Title>
-              <Card.Text>{item.description}</Card.Text>
-              <Card.Text>
-                <strong>Price: </strong>${item.price.toFixed(2)}
-              </Card.Text>
+              <Card.Title className="menu-item-title">{item.name}</Card.Title>
+              <Card.Text className="menu-item-price">${item.price.toFixed(2)}</Card.Text>
               <Button variant="primary" onClick={() => handleAddToCart(item)}>
                 Add to Order
               </Button>

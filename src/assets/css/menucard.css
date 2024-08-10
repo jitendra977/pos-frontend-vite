@@ -1,0 +1,48 @@
+/* menuItems.css */
+.menu-item-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Make sure cards stretch to fill column */
+  }
+  
+  .menu-item-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .menu-item-title {
+    font-size: 1rem; /* Smaller font size */
+    font-weight: bold;
+    margin-bottom: 0.25rem; /* Smaller margin */
+  }
+  
+  .menu-item-price {
+    font-size: 0.875rem; /* Smaller font size */
+    color: #333;
+    margin-bottom: 0.5rem; /* Smaller margin */
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.75rem; /* Smaller padding */
+    height: 100%;
+  }
+  
+  button {
+    font-size: 0.875rem; /* Smaller button text */
+  }
+  
+  @media (max-width: 768px) {
+    .menu-item-card {
+      margin: 0.5rem auto; /* Smaller margin */
+      max-width: 90%; /* Ensure cards fit within the viewport */
+    }
+  }
+  

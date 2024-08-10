@@ -1,23 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { Table, Button, Form, Row, Col, Container, Card } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
-import axios from '../../constant/axios';
+import React, { useState, useEffect } from "react";
+import {
+  Table,
+  Button,
+  Form,
+  Row,
+  Col,
+  Container,
+  Card,
+} from "react-bootstrap";
+import { NavLink, useNavigate } from "react-router-dom";
+import axios from "../../constant/axios";
 
 const Menus = () => {
   const [menus, setMenus] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterBy, setFilterBy] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterBy, setFilterBy] = useState("");
   const [hoveredMenuId, setHoveredMenuId] = useState(null);
   const [editingMenuId, setEditingMenuId] = useState(null);
   const [editableMenu, setEditableMenu] = useState({});
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [menusResponse, categoriesResponse] = await Promise.all([
-          axios.get('menu-items'),
-          axios.get('categories'),
+          axios.get("menu-items"),
+          axios.get("categories"),
         ]);
         setMenus(menusResponse.data);
         setCategories(categoriesResponse.data);
@@ -32,7 +41,7 @@ const Menus = () => {
     if (window.confirm("Are you sure you want to delete this menu item?")) {
       try {
         await axios.delete(`menu-items/${id}`);
-        setMenus(menus.filter(menu => menu.itemId !== id));
+        setMenus(menus.filter((menu) => menu.itemId !== id));
       } catch (error) {
         console.error("Error deleting menu item:", error);
       }
@@ -46,35 +55,39 @@ const Menus = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setEditableMenu(prev => ({
+    setEditableMenu((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
-  
+
   const handleSave = async () => {
     try {
       // Map the selected category name to the corresponding category ID before sending the update
-      const selectedCategory = categories.find(cat => cat.name === editableMenu.categoryName);
+      const selectedCategory = categories.find(
+        (cat) => cat.name === editableMenu.categoryName
+      );
       const updatedMenu = { ...editableMenu, categoryId: selectedCategory?.id };
-  
+
       await axios.put(`menu-items/${editableMenu.itemId}`, updatedMenu);
-      setMenus(menus.map(menu =>
-        menu.itemId === editableMenu.itemId ? updatedMenu : menu
-      ));
+      setMenus(
+        menus.map((menu) =>
+          menu.itemId === editableMenu.itemId ? updatedMenu : menu
+        )
+      );
       setEditingMenuId(null);
       setEditableMenu({});
     } catch (error) {
       console.error("Error updating menu item:", error);
     }
   };
-  
+
   const handleCancel = () => {
     setEditingMenuId(null);
     setEditableMenu({});
   };
 
-  const filteredMenus = menus.filter(menu => {
+  const filteredMenus = menus.filter((menu) => {
     const term = searchTerm.toLowerCase();
     if (!filterBy) {
       return (
@@ -88,23 +101,34 @@ const Menus = () => {
   return (
     <Container>
       <h1>Menu Management</h1>
+
       <Row className="mb-4">
         <Col md={4} sm={12}>
-          <Button as={NavLink} to="/addMenu" className="btn btn-primary w-100">Add Menu Item</Button>
+          <Button onClick={() => navigate(-1)} variant="outline-primary">
+            Back
+          </Button>
+        </Col>
+      </Row>
+
+      <Row className="mb-4">
+        <Col md={4} sm={12}>
+          <Button as={NavLink} to="/addMenu" className="btn btn-primary w-100">
+            Add Menu Item
+          </Button>
         </Col>
         <Col md={4} sm={12}>
-        <Form.Select
-  name="categoryName"
-  value={editableMenu.categoryName}
-  onChange={handleInputChange}
->
-  <option value="">Select Category</option>
-  {categories.map((category) => (
-    <option key={category.id} value={category.name}>
-      {category.name}
-    </option>
-  ))}
-</Form.Select>
+          <Form.Select
+            name="categoryName"
+            value={editableMenu.categoryName}
+            onChange={handleInputChange}
+          >
+            <option value="">Select Category</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.name}>
+                {category.name}
+              </option>
+            ))}
+          </Form.Select>
         </Col>
         <Col md={4} sm={12}>
           <Form.Control
@@ -196,10 +220,7 @@ const Menus = () => {
                       >
                         Save
                       </Button>
-                      <Button
-                        variant="secondary"
-                        onClick={handleCancel}
-                      >
+                      <Button variant="secondary" onClick={handleCancel}>
                         Cancel
                       </Button>
                     </>
@@ -238,9 +259,12 @@ const Menus = () => {
             <Card.Body className="d-flex justify-content-between align-items-start">
               <div>
                 <Card.Text>
-                  <strong>ID:</strong> {menu.itemId}<br/>
-                  <strong>Description:</strong> {menu.description}<br/>
-                  <strong>Price:</strong> ${menu.price}<br/>
+                  <strong>ID:</strong> {menu.itemId}
+                  <br />
+                  <strong>Description:</strong> {menu.description}
+                  <br />
+                  <strong>Price:</strong> ${menu.price}
+                  <br />
                   <strong>Category:</strong> {menu.categoryName}
                 </Card.Text>
               </div>

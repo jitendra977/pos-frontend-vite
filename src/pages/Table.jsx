@@ -1,9 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
+
 import { Container, Row, Col, Card, Badge, Alert, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import '../assets/css/ordertable.css';
 import { BASE_URL } from '../constant/constant';
+
 
 const Table = () => {
     const [tables, setTables] = useState([]);
@@ -50,8 +52,13 @@ const Table = () => {
                     <Col key={table.tableId}>
                         <Card className={`table-card ${getStatusColorClass(table.status)}`}>
                             <Card.Body>
+
                                 <Card.Title>Table {table.tableNumber}</Card.Title>
+
+                                
+
                                 <div className="table-details">
+                                    <Card.Title className="text-center"><FaChair className="me-2 icon" /> {table.name}</Card.Title>
                                     <div className="table-info">
                                         <strong>Status:</strong> <Badge bg={getStatusBadgeVariant(table.status)}>{table.status}</Badge>
                                     </div>

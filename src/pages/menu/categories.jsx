@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Form, Row, Col, Container, Card } from 'react-bootstrap';
-import { NavLink, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { NavLink } from 'react-router-dom'; // Import useNavigate
 import axios from '../../constant/axios';
-
+import BackButton from '../../components/BackButton';
 const Categories = () => {
   const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -11,7 +11,7 @@ const Categories = () => {
   const [editingCategoryId, setEditingCategoryId] = useState(null);
   const [editableCategory, setEditableCategory] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -117,13 +117,7 @@ const handleDelete = async (id) => {
         </Col>
       </Row>
 
-      {/* Add Back Button */}
-      <Row className="mb-4">
-        <Col md={4} sm={12}>
-          <Button onClick={() => navigate(-1)} variant="outline-primary">Back</Button>
-        </Col>
-      </Row>
-
+     <BackButton/>
       <div className="table-responsive d-none d-md-block">
         <Table striped bordered hover>
           <thead>
@@ -191,7 +185,8 @@ const handleDelete = async (id) => {
                       <Button
                         className="btn-edit"
                         onClick={() => handleEditClick(category)}
-                      >
+                      >jijitu
+
                         Edit
                       </Button>
                     </>

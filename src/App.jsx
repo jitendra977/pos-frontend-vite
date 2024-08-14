@@ -18,6 +18,8 @@ import OrderPage from './pages/Order/Order';
 import Categories from './pages/menu/categories';
 import AddCategory from './pages/menu/AddCategory';
 import AddMenuItem from './pages/menu/AddMenuItem';
+import RestaurantTable from './pages/other/RestaurantTable';
+import PaymentMethod from './pages/other/PaymentMethod';
 
 function App() {
   return (
@@ -41,6 +43,9 @@ function App() {
           <Route exact path="/categories" element={<Categories/>} />
           <Route exact path="/addCategory" element={<AddCategory/>} />
           <Route exact path="/addMenu" element={<AddMenuItem/>} />
+          <Route exact path="/restaurant-table" element={<RestaurantTable/>} />
+          <Route exact path="/payment-method" element={<PaymentMethod/>} />
+
 
           {/* Add more routes here as needed */}
         </Routes>

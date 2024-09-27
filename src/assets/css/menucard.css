@@ -1,27 +1,11 @@
 /* menuItems.css */
-.menu-item-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    height: 100%; /* Make sure cards stretch to fill column */
-  }
-  
+
   .menu-item-card:hover {
     transform: scale(1.02);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   
-  .menu-item-title {
-    font-size: 1rem; /* Smaller font size */
-    font-weight: bold;
-    margin-bottom: 0.25rem; /* Smaller margin */
-  }
-  
-  .menu-item-price {
+   .menu-item-price {
     font-size: 0.875rem; /* Smaller font size */
     color: #333;
     margin-bottom: 0.5rem; /* Smaller margin */
@@ -38,11 +22,53 @@
   button {
     font-size: 0.875rem; /* Smaller button text */
   }
+  .menu-item-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 120px; /* Adjusted height */
+    width: 100%; /* Full width of its column */
+    max-width: 280px; /* Adjusted width */
+    border-radius: 8px; /* Rounded corners for a modern look */
+    overflow: hidden; /* Hide overflow for a cleaner look */
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth hover effect */
+  }
   
+  .menu-item-card:hover {
+    transform: scale(1.02); /* Slight zoom effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
+  }
+  
+  .icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background-color: #f0f0f0; /* Light background for the icon container */
+    border-right: 3px solid #dddddd; /* Divider between icon and content */
+  }
+  
+  .menu-item-title {
+    font-size: 1.1rem; /* Slightly larger font size */
+    font-weight: bold;
+    margin-bottom: 0.5rem; /* Small gap below the title */
+  }
+  
+  .menu-item-price {
+    font-size: 0.9rem; /* Smaller font size for price */
+    color: #666; /* Slightly lighter color for the price */
+  }
   @media (max-width: 768px) {
     .menu-item-card {
       margin: 0.5rem auto; /* Smaller margin */
-      max-width: 90%; /* Ensure cards fit within the viewport */
+      max-width: 25%; /* Ensure cards fit within the viewport */
     }
   }
-  
+  @media (min-width: 768px) {
+    .col-md-4 {
+        flex: 0 0 auto;
+        width: 25%;
+    }
+}

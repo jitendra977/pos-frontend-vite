@@ -22,11 +22,10 @@
   padding: 15px;
   border: 2px solid #007bff; /* Button border color */
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: none; /* Remove shadow */
   background-color: white; /* Background color */
   color: #007bff; /* Text color */
   text-align: center;
-  transition: background-color 0.3s ease, transform 0.3s ease;
   width: 100%; /* Full width of the grid item */
   height: auto; /* Adjust height automatically */
 }
@@ -35,7 +34,7 @@
   background-color: #007bff; /* Background color on hover */
   color: white; /* Text color on hover */
   border-color: #0056b3; /* Border color on hover */
-  transform: translateY(-2px);
+
 }
 
 .item-icon {
@@ -71,7 +70,6 @@
   color: #007bff; /* Text color */
   text-align: center;
   font-weight: 500;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .category-tab.active {

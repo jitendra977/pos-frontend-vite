@@ -20,20 +20,18 @@
   padding: 15px;
   border: 2px solid #007bff; /* Button border color */
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: white; /* Background color */
   color: #007bff; /* Text color */
   text-align: center;
-  transition: background-color 0.3s ease, transform 0.3s ease;
   width: 100%; /* Full width of the grid item */
   height: auto; /* Adjust height automatically */
+  box-shadow: none; /* Remove shadow */
 }
 
 .item-button:hover {
-  background-color: #007bff; /* Background color on hover */
-  color: white; /* Text color on hover */
-  border-color: #0056b3; /* Border color on hover */
-  transform: translateY(-2px);
+  background-color: white; /* Ensure background stays white */
+  color: #007bff; /* Ensure text color stays unchanged */
+  border-color: #007bff; /* Ensure border color stays unchanged */
 }
 
 .item-icon {
@@ -69,7 +67,6 @@
   color: #007bff; /* Text color */
   text-align: center;
   font-weight: 500;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .category-tab.active {
@@ -78,6 +75,22 @@
 }
 
 .category-tab:hover {
-  background-color: #e6f0ff; /* Light background on hover */
-  color: #007bff; /* Text color on hover */
+  /* Removed hover effect */
+  background-color: white; /* Ensure background stays white */
+  color: #007bff; /* Ensure text color stays unchanged */
+}
+
+.table-responsive {
+  width: 100%;
+}
+
+.card-body-flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.justify-content-center {
+  flex-wrap: nowrap;
 }

@@ -26,7 +26,7 @@ const PaymentMethod = () => {
       <Row className="mb-4">
         <BackButton/>
         <Col md={4} sm={12}>
-          <Button as={NavLink} to="/addTable" className="btn btn-primary w-100">
+          <Button as={NavLink} to="/add-payment-method" className="btn btn-primary w-100">
             Add Payment Method
           </Button>
         </Col>
@@ -59,6 +59,7 @@ const PaymentMethod = () => {
               <tr>
                 <th>ID</th>
                 <th>Method Name</th>
+                <th>Description</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -67,6 +68,7 @@ const PaymentMethod = () => {
                 <tr key={payment.id}>
                   <td>{payment.id}</td>
                   <td>{payment.methodName}</td>
+                  <td>{payment.description}</td>
                   <td>
                     <Button
                       as={NavLink}

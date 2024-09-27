@@ -25,7 +25,7 @@ const Other = () => {
     if (isMobileView) {
       return (
         <>
-        <BackButton/>
+        
         <ListGroup className="mobile-list-group">
           <ListGroup.Item action as={NavLink} to="/table" className="mobile-list-item">
             <BsPerson className="me-2 icon" /> <span className="item-text">Delivery Person</span>
@@ -49,7 +49,9 @@ const Other = () => {
     } else {
       return (
         <Container fluid>
+          
           <Row>
+          <BackButton/>
             <Col md={4} lg={3} className="mb-4">
               <Card className="desktop-card">
                 <NavLink to="/table" className="nav-link">

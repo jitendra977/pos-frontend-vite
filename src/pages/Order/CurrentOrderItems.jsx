@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React from "react";
 import { Card, Table, Button } from "react-bootstrap";
 import { FaPlus, FaMinus } from "react-icons/fa";
+import "../../assets/css/style.css"
 
 const CurrentOrderItems = ({ orderItems, updateQuantity }) => {
   const grandTotal = orderItems.reduce((total, item) => total + (item.quantity * item.price), 0).toFixed(2);

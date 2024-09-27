@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Badge, Alert, Button } from 'react-bootstrap';
 import { FaChair } from 'react-icons/fa';
@@ -46,35 +45,34 @@ const Table = () => {
         }
 
         return (
-            <Row xs={1} md={2} lg={3} className="g-3">
+            <Row xs={1} md={2} lg={4} className="g-4">
                 {tables.map((table) => (
                     <Col key={table.tableId}>
                         <Card className={`table-card ${getStatusColorClass(table.status)}`}>
-                            <Card.Body>
-                                <Card.Title>Table {table.tableNumber}</Card.Title>
-                                <div className="table-details">
-                                    <Card.Title className="text-center"><FaChair className="me-2 icon" /> {table.name}</Card.Title>
-                                    <div className="table-info">
+                            <Card.Body className="d-flex flex-column justify-content-between">
+                                <div>
+                                    <Card.Title className="text-center">
+                                        <FaChair className="me-2 icon" /> Table {table.tableNumber}
+                                    </Card.Title>
+                                    <div className="table-info my-2">
                                         <strong>Status:</strong> <Badge bg={getStatusBadgeVariant(table.status)}>{table.status}</Badge>
                                     </div>
-                                    <div className="table-info">
+                                    <div className="table-info my-2">
                                         <strong>Current Order:</strong> {table.currentOrder || 'None'}
                                     </div>
-                                    <div className="table-info">
+                                    <div className="table-info my-2">
                                         <strong>Capacity:</strong> {table.capacity}
                                     </div>
-                                    <div className="table-info">
+                                    <div className="table-info my-2">
                                         <strong>Location:</strong> {table.location}
                                     </div>
-                                    <div className="table-info">
+                                    <div className="table-info my-2">
                                         <strong>Smoking Allowed:</strong> {table.smokingAllowed ? 'Yes' : 'No'}
                                     </div>
-                                    <div className="table-info mt-2">
-                                        <Link to={`/order-page/${table.tableId}`}>
-                                            <Button variant="primary">View Orders</Button>
-                                        </Link>
-                                    </div>
                                 </div>
+                                <Link to={`/order-page/${table.tableId}`} className="mt-3">
+                                    <Button variant="primary" block>View Orders</Button>
+                                </Link>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -108,7 +106,7 @@ const Table = () => {
     };
 
     return (
-        <Container fluid className="full-screen">
+        <Container fluid className="full-width-page px-5 py-4">
             <h1 className="text-center my-4">Table Status</h1>
             {renderTables()}
         </Container>

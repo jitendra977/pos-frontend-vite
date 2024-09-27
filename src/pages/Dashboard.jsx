@@ -62,7 +62,7 @@ const Dashboard = () => {
           <ListGroup.Item action as={NavLink} to="/other" className="mobile-list-item">
             <BsThreeDotsVertical className="me-2 icon" /> <span className="item-text">Other</span>
           </ListGroup.Item>
-          <ListGroup.Item action as={NavLink} to="/user-management" className="mobile-list-item">
+          <ListGroup.Item action as={NavLink} to="/user" className="mobile-list-item">
             <BsPeople className="me-2 icon" /> <span className="item-text">User Management</span>
           </ListGroup.Item>
           <ListGroup.Item action as={NavLink} to="/help" className="mobile-list-item">
@@ -232,7 +232,7 @@ const Dashboard = () => {
             </Col>
             <Col md={4} lg={3} className="mb-4">
               <Card className="desktop-card">
-                <NavLink to="/user-management" className="nav-link">
+                <NavLink to="/user" className="nav-link">
                   <Card.Body>
                     <Card.Title><BsPeople className="me-2 icon" /> User Management</Card.Title>
                     <Card.Text>

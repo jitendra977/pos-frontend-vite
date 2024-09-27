@@ -185,8 +185,7 @@ const handleDelete = async (id) => {
                       <Button
                         className="btn-edit"
                         onClick={() => handleEditClick(category)}
-                      >jijitu
-
+                      >
                         Edit
                       </Button>
                     </>

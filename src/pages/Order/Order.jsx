@@ -10,6 +10,7 @@ import CategorySidebar from "./CategorySidebar";
 import CurrentOrderItems from "./CurrentOrderItems";
 import MenuItems from "./MenuItems";
 
+
 const OrderPage = () => {
   const { tableId } = useParams();
   const [categories, setCategories] = useState([]);
@@ -19,6 +20,7 @@ const OrderPage = () => {
   const [tableDetails, setTableDetails] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [message, setMessage] = useState(null);
+  const [tables, setTables] = useState([]); // Add state for tables
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,22 +32,28 @@ const OrderPage = () => {
 
         const [categoriesRes, menuItemsRes] = await Promise.all([
           axios.get("categories"),
-          axios.get("menu-items")
+          axios.get("menu-items"),
         ]);
         setCategories(categoriesRes.data);
         setMenuItems(menuItemsRes.data);
 
         if (tableData.currentOrderId) {
           console.log("Fetching order with ID: ", tableData.currentOrderId);
-          const orderRes = await axios.get(`orders/${tableData.currentOrderId}`);
+          const orderRes = await axios.get(
+            `orders/${tableData.currentOrderId}`
+          );
           console.log("Order Data: ", orderRes.data);
           setOrderItems(orderRes.data.orderItems || []);
         } else {
           console.log("No currentOrderId found for the table.");
         }
+
+        // Fetch all tables for the RightSidebar
+        const tablesRes = await axios.get("tables");
+        setTables(tablesRes.data.data || []);
       } catch (err) {
         console.error("Error fetching data: ", err);
-        setMessage('Error fetching data.');
+        setMessage("Error fetching data.");
       }
     };
 
@@ -54,15 +62,17 @@ const OrderPage = () => {
 
   useEffect(() => {
     setFilteredMenuItems(
-      selectedCategory === null 
-        ? menuItems 
-        : menuItems.filter(item => item.categoryId === selectedCategory)
+      selectedCategory === null
+        ? menuItems
+        : menuItems.filter((item) => item.categoryId === selectedCategory)
     );
   }, [selectedCategory, menuItems]);
 
   const handleAddToCart = (item) => {
-    setOrderItems(prevOrderItems => {
-      const existingItemIndex = prevOrderItems.findIndex(orderItem => orderItem.menuItem.itemId === item.itemId);
+    setOrderItems((prevOrderItems) => {
+      const existingItemIndex = prevOrderItems.findIndex(
+        (orderItem) => orderItem.menuItem.itemId === item.itemId
+      );
 
       if (existingItemIndex !== -1) {
         const updatedOrderItems = prevOrderItems.map((orderItem, index) => {
@@ -80,11 +90,14 @@ const OrderPage = () => {
   };
 
   const updateQuantity = (index, change) => {
-    setOrderItems(prevOrderItems => {
+    setOrderItems((prevOrderItems) => {
       const updatedOrderItems = [...prevOrderItems];
       const newQuantity = updatedOrderItems[index].quantity + change;
       if (newQuantity > 0) {
-        updatedOrderItems[index] = { ...updatedOrderItems[index], quantity: newQuantity };
+        updatedOrderItems[index] = {
+          ...updatedOrderItems[index],
+          quantity: newQuantity,
+        };
       }
       return updatedOrderItems;
     });
@@ -98,49 +111,68 @@ const OrderPage = () => {
       user: { userId: 1 },
       paymentMethod: { id: 1 },
       kitchen: { id: 1 },
-      orderItems: orderItems.map(item => ({
+      orderItems: orderItems.map((item) => ({
         menuItem: { itemId: item.menuItem.itemId },
-        quantity: item.quantity
-      }))
+        quantity: item.quantity,
+      })),
     };
-  
+
     try {
-      const response = await axios.post("http://localhost:8081/api/orders", orderData, {
-        headers: {
-          'Content-Type': 'application/json'
+      const response = await axios.post(
+        "http://localhost:8081/api/orders",
+        orderData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      });
-      setMessage('Order saved successfully!');
+      );
+      setMessage("Order saved successfully!");
     } catch (err) {
       console.error("Error saving order: ", err);
-      setMessage(`Error saving order: ${err.response?.data?.message || err.message}`);
+      setMessage(
+        `Error saving order: ${err.response?.data?.message || err.message}`
+      );
     }
   };
 
   return (
-    <Container className="my-4">
-      <h1>Order Page</h1>
-      {message && <Alert variant={message.includes('successfully') ? 'success' : 'danger'}>{message}</Alert>}
-      <TableDetails tableId={tableDetails?.tableNumber} currentOrderId={tableDetails?.currentOrderId} />
+    <Container fluid className="my-4">
       <Row>
-        <Col md={3}>
-          <CategorySidebar 
-            categories={categories} 
-            selectedCategory={selectedCategory} 
-            setSelectedCategory={setSelectedCategory} 
+        <Col>
+          {message && (
+            <Alert
+              variant={message.includes("successfully") ? "success" : "danger"}
+            >
+              {message}
+            </Alert>
+          )}
+          <TableDetails
+            tableId={tableDetails?.tableNumber}
+            currentOrderId={tableDetails?.currentOrderId}
           />
-        </Col>
-        <Col md={9}>
-          <CurrentOrderItems 
-            orderItems={orderItems} 
-            updateQuantity={updateQuantity} 
-          />
-          <MenuItems filteredMenuItems={filteredMenuItems} handleAddToCart={handleAddToCart} />
-          <Button variant="primary" onClick={handleSaveOrder} className="mt-3">
-            Save Order
-          </Button>
+          <Row>
+            <Col lg={3} md={4} className="mb-4">
+              <CategorySidebar
+                categories={categories}
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
+              />
+            </Col>
+            <Col lg={9} md={8}>
+              <CurrentOrderItems
+                orderItems={orderItems}
+                updateQuantity={updateQuantity}
+              />
+              <MenuItems
+                filteredMenuItems={filteredMenuItems}
+                handleAddToCart={handleAddToCart}
+              />
+            </Col>
+          </Row>
         </Col>
       </Row>
+      
     </Container>
   );
 };

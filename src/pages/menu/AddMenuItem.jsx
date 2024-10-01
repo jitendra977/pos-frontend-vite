@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
-import { BASE_URL } from '../../constant/constant';
+// import { BASE_URL } from '../../constant/constant';
+import baseUrl from '../../config';
 
 const AddMenuItem = () => {
   const initialMenuItemState = {
@@ -21,7 +22,7 @@ const AddMenuItem = () => {
 
   const fetchCategory = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/categories`, {
+      const response = await fetch(`${baseUrl}/categories`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -47,7 +48,7 @@ const AddMenuItem = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${BASE_URL}/menu-items`, {
+      const response = await fetch(`${baseUrl}/menu-items`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

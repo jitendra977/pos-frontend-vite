@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Form, Row, Col, Card, Image } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { BASE_URL } from '../../constant/constant';
+// import { BASE_URL } from '../../constant/constant';
+import baseUrl from '../../config';
 import CustomerImg from '../../assets/images/Item/image.png';
 import '../../assets/css/customer.css';
 
@@ -17,7 +18,7 @@ const Customers = () => {
 
   const fetchCustomers = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/customer`);
+      const response = await fetch(`${baseUrl}/customer`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -43,7 +44,7 @@ const Customers = () => {
   const confirmDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this customer?")) {
       try {
-        const response = await fetch(`${BASE_URL}/customer/${id}`, {
+        const response = await fetch(`${baseUrl}/customer/${id}`, {
           method: 'DELETE',
         });
         if (!response.ok) {

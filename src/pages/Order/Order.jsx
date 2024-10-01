@@ -1,180 +1,89 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
-import axios from "../../constant/axios";
-import { Container, Row, Col, Button, Alert } from "react-bootstrap";
-import { useParams } from "react-router-dom";
-import "../../assets/css/OrderPage.css";
+/* eslint-disable react/prop-types */
+import React from "react";
+import { Card, Table, Button } from "react-bootstrap";
+import { FaPlus, FaMinus } from "react-icons/fa";
+import "../../assets/css/style.css";
 
-import TableDetails from "./TableDetails";
-import CategorySidebar from "./CategorySidebar";
-import CurrentOrderItems from "./CurrentOrderItems";
-import MenuItems from "./MenuItems";
+const CurrentOrderItems = ({ orderItems, updateQuantity }) => {
+  const grandTotal = orderItems.reduce(
+    (total, item) => total + item.quantity * item.price,
+    0
+  ).toFixed(2);
 
-
-const OrderPage = () => {
-  const { tableId } = useParams();
-  const [categories, setCategories] = useState([]);
-  const [menuItems, setMenuItems] = useState([]);
-  const [filteredMenuItems, setFilteredMenuItems] = useState([]);
-  const [orderItems, setOrderItems] = useState([]);
-  const [tableDetails, setTableDetails] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [message, setMessage] = useState(null);
-  const [tables, setTables] = useState([]); // Add state for tables
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const tableRes = await axios.get(`tables/${tableId}`);
-        const tableData = tableRes.data.data;
-        console.log("Table Data: ", tableData);
-        setTableDetails(tableData);
-
-        const [categoriesRes, menuItemsRes] = await Promise.all([
-          axios.get("categories"),
-          axios.get("menu-items"),
-        ]);
-        setCategories(categoriesRes.data);
-        setMenuItems(menuItemsRes.data);
-
-        if (tableData.currentOrderId) {
-          console.log("Fetching order with ID: ", tableData.currentOrderId);
-          const orderRes = await axios.get(
-            `orders/${tableData.currentOrderId}`
-          );
-          console.log("Order Data: ", orderRes.data);
-          setOrderItems(orderRes.data.orderItems || []);
-        } else {
-          console.log("No currentOrderId found for the table.");
-        }
-
-        // Fetch all tables for the RightSidebar
-        const tablesRes = await axios.get("tables");
-        setTables(tablesRes.data.data || []);
-      } catch (err) {
-        console.error("Error fetching data: ", err);
-        setMessage("Error fetching data.");
-      }
-    };
-
-    fetchData();
-  }, [tableId]);
-
-  useEffect(() => {
-    setFilteredMenuItems(
-      selectedCategory === null
-        ? menuItems
-        : menuItems.filter((item) => item.categoryId === selectedCategory)
-    );
-  }, [selectedCategory, menuItems]);
-
-  const handleAddToCart = (item) => {
-    setOrderItems((prevOrderItems) => {
-      const existingItemIndex = prevOrderItems.findIndex(
-        (orderItem) => orderItem.menuItem.itemId === item.itemId
-      );
-
-      if (existingItemIndex !== -1) {
-        const updatedOrderItems = prevOrderItems.map((orderItem, index) => {
-          if (index === existingItemIndex) {
-            return { ...orderItem, quantity: orderItem.quantity + 1 };
-          }
-          return orderItem;
-        });
-        return updatedOrderItems;
-      }
-
-      const newItem = { menuItem: item, quantity: 1, price: item.price };
-      return [...prevOrderItems, newItem];
-    });
-  };
-
-  const updateQuantity = (index, change) => {
-    setOrderItems((prevOrderItems) => {
-      const updatedOrderItems = [...prevOrderItems];
-      const newQuantity = updatedOrderItems[index].quantity + change;
-      if (newQuantity > 0) {
-        updatedOrderItems[index] = {
-          ...updatedOrderItems[index],
-          quantity: newQuantity,
-        };
-      }
-      return updatedOrderItems;
-    });
-  };
-
-  const handleSaveOrder = async () => {
-    const orderData = {
-      orderDate: "2024-07-19T08:05:19.993",
-      status: "PENDING",
-      table: { tableId: Number(tableId) },
-      user: { userId: 1 },
-      paymentMethod: { id: 1 },
-      kitchen: { id: 1 },
-      orderItems: orderItems.map((item) => ({
-        menuItem: { itemId: item.menuItem.itemId },
-        quantity: item.quantity,
-      })),
-    };
-
-    try {
-      const response = await axios.post(
-        "http://localhost:8081/api/orders",
-        orderData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      setMessage("Order saved successfully!");
-    } catch (err) {
-      console.error("Error saving order: ", err);
-      setMessage(
-        `Error saving order: ${err.response?.data?.message || err.message}`
-      );
-    }
+  const handleQuantityChange = (index, change) => {
+    updateQuantity(index, change);
   };
 
   return (
-    <Container fluid className="my-4">
-      <Row>
-        <Col>
-          {message && (
-            <Alert
-              variant={message.includes("successfully") ? "success" : "danger"}
-            >
-              {message}
-            </Alert>
-          )}
-          <TableDetails
-            tableId={tableDetails?.tableNumber}
-            currentOrderId={tableDetails?.currentOrderId}
-          />
-          <Row>
-            <Col lg={3} md={4} className="mb-4">
-              <CategorySidebar
-                categories={categories}
-                selectedCategory={selectedCategory}
-                setSelectedCategory={setSelectedCategory}
-              />
-            </Col>
-            <Col lg={9} md={8}>
-              <CurrentOrderItems
-                orderItems={orderItems}
-                updateQuantity={updateQuantity}
-              />
-              <MenuItems
-                filteredMenuItems={filteredMenuItems}
-                handleAddToCart={handleAddToCart}
-              />
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-      
-    </Container>
+    <Card className="mb-4">
+      <Card.Header>
+        <div className="d-flex justify-content-between align-items-center">
+          <span>Current Order Items</span>
+          <span className="grand-total">Grand Total: ${grandTotal}</span>
+        </div>
+      </Card.Header>
+      <Card.Body>
+        <div className="table-responsive">
+          <Table striped bordered hover className="order-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Menu Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th className="hide-on-mobile">Total</th>
+                <th className="hide-on-mobile">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orderItems.length ? (
+                orderItems.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.menuItem.itemId}</td>
+                    <td>{item.menuItem.name}</td>
+                    <td>
+                      <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        className="quantity-btn"
+                        onClick={() => handleQuantityChange(index, -1)}
+                        disabled={item.quantity <= 1}
+                      >
+                        <FaMinus />
+                      </Button>
+                      <span className="mx-2">{item.quantity}</span>
+                      <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        className="quantity-btn"
+                        onClick={() => handleQuantityChange(index, 1)}
+                      >
+                        <FaPlus />
+                      </Button>
+                    </td>
+                    <td>${item.price.toFixed(2)}</td>
+                    <td className="hide-on-mobile">
+                      ${(item.quantity * item.price).toFixed(2)}
+                    </td>
+                    <td className="hide-on-mobile">
+                      <Button variant="danger">Delete</Button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" className="text-center">
+                    No orders found for this table
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+        </div>
+      </Card.Body>
+    </Card>
   );
 };
 
-export default OrderPage;
+export default CurrentOrderItems;

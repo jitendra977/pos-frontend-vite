@@ -3,7 +3,8 @@ import { Container, Row, Col, Card, Badge, Alert, Button } from 'react-bootstrap
 import { FaChair } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import '../assets/css/ordertable.css';
-import { BASE_URL } from '../constant/constant';
+// import { BASE_URL } from '../constant/constant';
+import baseUrl from '../config';
 
 const Table = () => {
     const [tables, setTables] = useState([]);
@@ -13,7 +14,7 @@ const Table = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${BASE_URL}/tables`);
+                const response = await fetch(`${baseUrl}/tables`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }

@@ -76,3 +76,67 @@
   background-color: #007bff; /* Background color for active tab */
   color: white; /* Text color for active tab */
 }
+
+/* OrderPage.css */
+@media (max-width: 768px) {
+  .my-4 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .btn {
+    width: 100%; /* Make buttons full-width on mobile */
+  }
+}
+
+
+/* OrderPage.css */
+
+/* Card Container */
+.clickable-card {
+  transition: all 0.3s ease;
+  border: 1px solid #ddd; /* Light border */
+  border-radius: 10px; /* Rounded corners */
+  overflow: hidden;
+  background-color: #ffffff; /* White background */
+}
+
+/* Card Hover Effect */
+.clickable-card:hover {
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Shadow on hover */
+  transform: translateY(-5px); /* Slight lift on hover */
+  background-color: #f0f8ff; /* Subtle background color change */
+  border-color: #007bff; /* Change border color on hover */
+}
+
+/* Card Title Styling */
+.clickable-card .card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333; /* Darker title color */
+  margin-bottom: 5px;
+}
+
+/* Card Text Styling */
+.clickable-card .card-text {
+  font-size: 0.85rem;
+  color: #666; /* Lighter text color */
+  margin-bottom: 10px;
+}
+
+/* Price Badge Styling */
+.price-badge {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #007bff; /* Blue color */
+  background-color: #e9f5ff; /* Light blue background */
+  border-radius: 5px;
+  padding: 3px 8px;
+}
+
+/* Responsive Spacing for Cards */
+@media (max-width: 768px) {
+  .clickable-card {
+    margin-bottom: 15px;
+  }
+}

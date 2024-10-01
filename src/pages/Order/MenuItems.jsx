@@ -1,30 +1,41 @@
 /* eslint-disable react/prop-types */
 import React from "react";
-import { Card, Row, Col } from "react-bootstrap";
+import { Card, Row, Col, Spinner } from "react-bootstrap";
 import { FaUtensils } from "react-icons/fa"; // Example icon, replace as needed
 import "../../assets/css/menucard.css";
 
-const MenuItems = ({ filteredMenuItems, handleAddToCart }) => {
+const MenuItems = ({ filteredMenuItems, handleAddToCart, isLoading }) => {
+  if (isLoading) {
+    return (
+      <div className="text-center my-4">
+        <Spinner animation="border" variant="primary" />
+        <p>Loading Menu Items...</p>
+      </div>
+    );
+  }
+
   return (
     <Row>
-      {filteredMenuItems.map((item) => (
-        <Col md={4} sm={6} xs={12} key={item.itemId} className="mb-3">
-          <Card className="menu-item-card" onClick={() => handleAddToCart(item)}>
-            <Row noGutters className="h-100">
-              <Col xs={4} className="d-flex align-items-center justify-content-center icon-container">
-                <FaUtensils size={40} />
-              </Col>
-              <Col xs={8} className="d-flex flex-column justify-content-center">
-                <Card.Body className="d-flex flex-column h-100 p-3">
-                  <Card.Title className="menu-item-title">{item.name}</Card.Title>
-                  <Card.Text className="menu-item-price">${item.price.toFixed(2)}</Card.Text>
-                </Card.Body>
-              </Col>
-            </Row>
-          </Card>
-        </Col>
-      ))}
-    </Row>
+  {filteredMenuItems.map((item) => (
+    <Col xs={6} md={4} lg={3} key={item.itemId} className="mb-3">
+      <Card className="h-100">
+        <Card.Body>
+          <Card.Title>{item.name}</Card.Title>
+          <Card.Text>{item.description}</Card.Text>
+          <div className="d-flex justify-content-between align-items-center">
+            <span>Price: ${item.price.toFixed(2)}</span>
+            <Button
+              variant="primary"
+              onClick={() => handleAddToCart(item)}
+            >
+              Add to Cart
+            </Button>
+          </div>
+        </Card.Body>
+      </Card>
+    </Col>
+  ))}
+</Row>
   );
 };
 

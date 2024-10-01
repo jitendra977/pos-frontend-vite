@@ -94,3 +94,37 @@
 .justify-content-center {
   flex-wrap: nowrap;
 }
+
+/* style.css */
+
+/* General Styles */
+.grand-total {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #007bff;
+}
+
+/* Quantity Button Styles */
+.quantity-btn {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  font-size: 0.75rem; /* Make buttons smaller */
+}
+
+/* Mobile View Adjustments */
+@media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none; /* Hide Action and Total columns */
+  }
+
+  /* Adjust the layout for mobile */
+  .order-table td, .order-table th {
+    font-size: 0.9rem;
+  }
+
+  .quantity-btn {
+    width: 25px; /* Smaller buttons for mobile */
+    height: 25px;
+  }
+}
